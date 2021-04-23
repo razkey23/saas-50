@@ -8,6 +8,8 @@ import SignUp from "./components/signup"
 import Landing from "./components/landing_page"
 import HomePage from "./components/home_page"
 import MyPage from "./components/my_page"
+import Ask from "./components/ask_question"
+import Answer from "./components/answer_question"
 
 function App() {
   return (<Router>
@@ -31,6 +33,12 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to={"/mypage"}>My Page</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/ask"}>Ask</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/answer"}>Answer</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -44,6 +52,8 @@ function App() {
             <Route path="/landing" component={Landing} />
             <Route path="/homepage" component={HomePage} />
             <Route path="/mypage" component={MyPage} />
+            <Route path="/ask" component={Ask} />
+            <Route path="/answer" component={Answer} />
           </Switch>
       </div>
     </div></Router>

@@ -46,6 +46,33 @@ code {
   text-align: left;
 }
 
+.vertical-orientation {
+  padding-top: 5%;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: auto;
+}
+
+.horizontal-orientation {
+  display: flex;
+  max-width: 90%;
+  margin-left: 5%;
+  padding: 2em 0em;
+  justify-content: space-evenly;
+  flex-direction: row;
+  text-align: left;
+}
+
+.buttons {
+  width: 30%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .home-box {
   width: 200px;
   height: 200px;

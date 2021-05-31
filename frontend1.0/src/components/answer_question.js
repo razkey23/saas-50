@@ -8,9 +8,10 @@ export default class Answer extends Component {
   render() {
     return (
         <div>
-            <div class="ask-me">Answer a question</div>
             
-            <div className="verical-orientation"  style={{width:90+"%"},{marginLeft: 5+"%"}}>
+            
+            <div className="verical-orientation text-align-right"  style={{width:90+"%",marginLeft:5+"%"}}>
+                <div class="ask-me" style={{paddingLeft:0, paddingBottom:2+"em"}}>Answer a question</div>
                 {/* make it be a select from all the questions */}
                 <input type="text" className="form-control" placeholder="question tiles"></input>
                 <div style={{height:1+"em"}}></div>
@@ -24,7 +25,7 @@ export default class Answer extends Component {
 
                 <div className="form-group">
                     <label style={{width:20+'%'}}>Keywords:</label>
-                    <input type="text" className="form-control"></input>
+                    <textarea className="form-control" rows="5" ></textarea>
                 </div>
                 
                 <div className="buttons">

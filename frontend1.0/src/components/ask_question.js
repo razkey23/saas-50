@@ -8,9 +8,8 @@ export default class Ask extends Component {
   render() {
     return (
         <div>
-            <div class="ask-me">Ask a question</div>
             <div className="verical-orientation">
-
+                <div class="ask-me" style={{paddingLeft:5+"%", paddingBottom:2+"em"}}>Ask a question</div>
                 <div className="horizontal-orientation">
                     <label style={{width:20+'%'}}>Question title:</label>
                     <input type="text" className="form-control"></input>

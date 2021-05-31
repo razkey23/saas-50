@@ -6,11 +6,6 @@ export default class Login extends Component {
 
     constructor() {
         super();
-    
-        this.test = this.test.bind(this);
-      }
-      test() {
-        alert("function executed on clicking div");
       }
   render() {
     return (

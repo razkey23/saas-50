@@ -2,46 +2,6 @@ const express = require('express');
 const router = express.Router();
 const  request = require('request');
 
-/* GET home page. */
-
-
-
-
-//Questions Per Keywords
-//GET request at localhost:5000/QuestionsPerKW + question in body ("keyword":id) as int
-router.get('/QuestionsPerKW',function (req, res, next) {
-  if (!req.body.keyword) {
-    res.json({"error":"Not keyword given"});
-  }
-  else {
-    const requestOptions = {
-      url: "http://localhost:3000/question",
-      method: 'GET',
-      json: {}
-    }
-    request(requestOptions, (err, response, body) =>
-    {
-      if (err) {
-        console.log(err);
-      } else if (response.statusCode === 200) {
-        let temp=[]; //INIT RESULT ARRAY
-        for(x in body) { //PARSE Question JSON
-          if (body[x].keyword.length>0) { //GET KEYWORD ARRAY OBJECT
-            for (kw in body[x].keyword) { //Parse Keyword array of question
-              if (body[x].keyword[kw].id == req.body.keyword) { //Check if Keyword id in request matches
-                temp.push(body[x]);                             //Push question if found
-              }
-            }
-          }
-        }
-        res.json(temp);  //Return object
-      } else {
-        console.log(response.statusCode);
-      }
-    });
-  }
-});
-
 //Get answers of a question
 //GET request at localhost:5000/answerOf + question in body ("question":id) as int
 router.get('/AnswersOfQuestion',function(req,res,next) {
@@ -103,43 +63,6 @@ router.get('/AnswersOfUser',function(req,res,next) {
             customobj.id=body[x].id;
             customobj.text=body[x].text;
             customobj.date_answered=body[x].date_answered;
-            temp.push(customobj);
-          }
-        }
-        res.json(temp);  //Return object
-      } else {
-        console.log(response.statusCode);
-      }
-    });
-  }
-});
-
-//Get Questions of day
-//endpoint localhost:5000/QuestionsPerDay + Date in body ("date_asked":date)
-router.get('/QuestionsPerDay',function(req,res,next) {
-  if (!req.body.date_asked){
-    res.json({"error":"Not keyword given"});
-  }
-  else{
-    const requestOptions = {
-      url: "http://localhost:3000/question",
-      method: 'GET',
-      json: {}
-    }
-    request(requestOptions, (err, response, body) =>
-    {
-      if (err) {
-        console.log(err);
-      } else if (response.statusCode === 200) {
-        let temp=[]; //INIT RESULT ARRAY
-        for(x in body) { //PARSE Question JSON
-          console.log(body[x]);
-          if(body[x].date_asked==req.body.date_asked) { //RETRIEVE custom object
-            let customobj={};
-            customobj.id=body[x].id;
-            customobj.text=body[x].text;
-            customobj.title=body[x].title;
-            customobj.date_asked=body[x].date_asked;
             temp.push(customobj);
           }
         }

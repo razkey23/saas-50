@@ -10,19 +10,55 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'secret'; //Could be a private-public key pair
 const bcrypt = require('bcrypt');
+const  request = require('request');
+
+
+
 
 
 passport.use('bcryptsignin',new LocalStrategy(function(username, password, cb) {
-    //WORKING USER IS
-    //username: razkey
-    //password: secret
-    if (username ==='razkey') {
-        bcrypt.compare(password,'$2b$10$qnOOuLfSNZ.830v.8i9S2ORoBmRyWb.KFvCxaL2uCYHes5VdaJ8O6', function(err, res) {
-            if (err) return cb(err);
-            if (res === false) {
-                return cb(null, false);
+
+    //GET USER BY USERNAME
+    if (!username) {
+        console.log(username);
+        return cb(null, false);
+    }
+    else {
+        const requestOptions = {
+            url: "http://localhost:3000/user",
+            method: 'GET',
+            json: {}
+        }
+        request(requestOptions, (err, response, bod) =>
+        {
+            if (err) {
+                console.log(err);
+            } else if (response.statusCode === 200) {
+               // for(var i = 0; i<bod.length;i++ ) {
+                for (x in bod) {
+                    console.log(bod[x]);
+
+                    if (bod[x].username === username) {
+                        //res.json(body[x]);
+                        console.log(password);
+                        console.log(bod[x].password);
+                        bcrypt.compare(password, bod[x].password, function (err, res) {
+                            if (err) return cb(err);
+                            if (res === false) {
+                                console.log("in here");
+                                return cb(null, false);
+                            } else {
+                                return cb(null, {username: username});
+                            }
+                        });
+                    }
+                    else {
+                        if (x == bod.length) return cb(null,false);
+                    }
+                }
             } else {
-                return cb(null, { username : username });
+                console.log("in here");
+                return cb(null, false);
             }
         });
     }
@@ -37,6 +73,7 @@ passport.use('token', new JWTStrategy(
         return done(null, { username: token.username})
     }
 ));
+
 //passport.authenticate('signin',{session: false}),
 //passport.authenticate('bcryptsignin',{session:false}),
 //POST signin
@@ -60,15 +97,50 @@ router.get('/whoami',
 router.post('/register', function(req, res, next) {
     // Whatever verifications and checks you need to perform here
     bcrypt.genSalt(10, function(err, salt) {
+        if (!req.body.password){
+            res.json({'Error':'No Password Given'});
+        }
+        /*CHECK IF USER EXISTS*/
+
+        //console.log(x)
         if (err) return next(err);
         bcrypt.hash(req.body.password, salt, function(err, hash) {
             console.log(hash);
             if (err) return next(err);
-            //newUser.password = hash; // Or however suits your setup
+            const username=req.body.username;
+            const password=hash;
+
+
+            if (!username || !password) {
+                res.status(400).send("Error Inserting username or password");
+            }
+            else {
+                let customobject = {};
+                customobject.username=username;
+                customobject.password=password;
+                const requestOptions = {
+                    url: "http://localhost:3000/user",
+                    method: 'POST',
+                    json: customobject
+                }
+                request(requestOptions, (err, response, body) =>
+                {
+                    if (err) {
+                        console.log(err);
+                    } else if (response.statusCode === 201) {
+                        res.status(210).json({"Status":"OK"});
+                        //res.json(body);  //Return object
+                    } else {
+                        res.status(400).send("An error was Encountered,check again");
+                        console.log(response.statusCode);
+                    }
+                });
+            }
             // Store the user to the database, then send the response
+            // newUser.password = hash; // Or however suits your setup
+
         });
     });
-    res.send("OK");
 });
 
 

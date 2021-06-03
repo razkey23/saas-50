@@ -15,11 +15,11 @@ export class UserService {
   }
 
   async findAll(): Promise <User[]> {
-    return this.manager.find(User, { relations : ["question"]});
+    return this.manager.find(User);
   }
 
   async findOne(id: number) : Promise <User> {
-    const user = await this.manager.findOne(User,id,{relations:["question"]});
+    const user = await this.manager.findOne(User,id);
     if (!user) throw new NotFoundException(`User ${id} not found`);
     return user;
   }
@@ -27,7 +27,7 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto): Promise <User> {
     return this.manager.transaction( async manager =>
     {
-      const user=await manager.findOne(User,id,{relations:["question"]});
+      const user=await manager.findOne(User,id);
       if (!user) throw new NotFoundException(`User ${id} not found`);
       manager.merge(User,user,updateUserDto);
       return manager.save(user);

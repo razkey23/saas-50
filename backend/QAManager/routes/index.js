@@ -236,6 +236,7 @@ router.post('/AddQuestion',function(req,res,next){
       request(requestOptions, (err, response, body) =>
       {
         if (err) {
+          res.statusCode(400).send(err);
           console.log(err);
         } else if (response.statusCode === 201) {
           res.send({"status":"OK"});

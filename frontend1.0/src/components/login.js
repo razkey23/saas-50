@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import axios from 'axios'
+import Cookies from 'universal-cookie'
 
+const baseUrl = 'http://localhost:8000'
 export default class Login extends Component {
   constructor(props){
     super(props);
@@ -7,8 +10,6 @@ export default class Login extends Component {
       username: '',
       password: ''
     }
-    
-    this.login = this.login.bind()
   }
 
   updateUsername(evt){
@@ -24,9 +25,26 @@ export default class Login extends Component {
     });
     console.log(this.state)
   }
+  
   login(){
-    console.log(this.state);
+    axios({
+      method: 'POST',
+      url: `${baseUrl}/signin`,
+      data: {
+        username: this.state.username,
+        password: this.state.password
+      }
+    }).then(function(response) {
+      const cookie = new Cookies();
+      var d = new Date();
+      d.setTime(d.getTime()+ (5*60*60*1000));
+      cookie.set('token', response, { path: '/', expires: d})
+    }).catch(function(error) {
+      alert(error)
+    })
   }
+
+  
   render() {
     return (
       <div className="auth-wrapper">
@@ -44,7 +62,7 @@ export default class Login extends Component {
               <input type="password" className="form-control" placeholder="Enter password" onChange={evt => this.updatePassword(evt)}></input>
             </div>
 
-          <button type="submit" onClick={this.login} className="btn btn-primary btn-block">Login</button>
+          <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block">Login</button>
           </form>
         </div>
       </div>

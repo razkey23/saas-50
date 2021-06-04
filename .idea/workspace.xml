@@ -49,6 +49,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\razkey\git\saas-50\SOA" />
       <recent name="C:\Users\razkey\git\saas-50\backend\datalayer\src" />
     </key>
   </component>
@@ -69,7 +70,8 @@
       <workItem from="1622560101815" duration="619000" />
       <workItem from="1622614974457" duration="106000" />
       <workItem from="1622615333446" duration="29344000" />
-      <workItem from="1622716141418" duration="5447000" />
+      <workItem from="1622716141418" duration="10429000" />
+      <workItem from="1622809391682" duration="342000" />
     </task>
     <servers />
   </component>
@@ -99,8 +101,12 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/backend/QAManager/routes/index.js</url>
           <line>42</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/backend/Authenticator/routes/index.js</url>
+          <line>94</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

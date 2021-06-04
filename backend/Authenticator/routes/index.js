@@ -46,7 +46,7 @@ passport.use('bcryptsignin',new LocalStrategy(function(username, password, cb) {
                                 console.log("in here");
                                 return cb(null, false);
                             } else {
-                                return cb(null, {username: username});
+                                return cb(null, {username: username,id:bod[x].id});
                             }
                         });
                     }
@@ -99,7 +99,6 @@ router.post('/register', function(req, res, next) {
             res.json({'Error':'No Password Given'});
         }
         /*CHECK IF USER EXISTS*/
-
         //console.log(x)
         if (err) return next(err);
         bcrypt.hash(req.body.password, salt, function(err, hash) {
@@ -107,8 +106,6 @@ router.post('/register', function(req, res, next) {
             if (err) return next(err);
             const username=req.body.username;
             const password=hash;
-
-
             if (!username || !password) {
                 res.status(400).send("Error Inserting username or password");
             }
@@ -233,7 +230,7 @@ router.get('/AnswersOfQuestion',function(req,res,next) {
 });
 
 //Get Answers per User
-// endpoint localhost:5000/AnswerOfUser + user in body ("keyword":id) as int
+// endpoint localhost:5000/AnswerOfUser + user in body ("user":id) as int
 router.get('/AnswersOfUser',function(req,res,next) {
     if (!req.body.user) {
         res.json({"error": "Not keyword given"});

@@ -2,8 +2,118 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46d96f78-195b-4d37-afb8-af1cac6cc7a5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SOA/backend/ESB/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Authenticator/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Authenticator/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diagrams/saas50.vpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diagrams/saas50.vpp.bak_000f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diagrams/soa-component-saas-50.vpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/bin/www" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Analytics/routes/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/Authenticator.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/runConfigurations/bin_www.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/bin/www" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/pgqueries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Authenticator/routes/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/bin/www" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/QAManager/routes/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/.eslintrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/.prettierrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/nest-cli.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/answer.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/answer.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/answer.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/answer.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/answer.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/dto/create-answer.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/dto/update-answer.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/answer/entities/answer.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/app.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/app.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/app.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/dto/create-keyword.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/dto/update-keyword.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/entities/keyword.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/keyword.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/keyword.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/keyword.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/keyword.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/keyword/keyword.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/orm.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/dto/create-question.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/dto/update-question.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/entities/question.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/question.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/question.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/question.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/question.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/question/question.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/dto/create-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/dto/update-user.dto.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/entities/user.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/user.controller.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/user.controller.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/user.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/user.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/src/user/user.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/test/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/test/jest-e2e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/tsconfig.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/datalayer/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.idea/frontend1.0.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/answer_question.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/ask_question.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/home_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/landing_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/my_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/questionsPerDay.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/questionsPerKeyword.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/components/signup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend1.0/src/setupTests.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +153,7 @@
     <property name="javascript.nodejs.core.library.typings.version" value="14.17.1" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="C:\Users\razkey\git\saas-50\backend\datalayer\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -72,6 +182,7 @@
       <workItem from="1622615333446" duration="29344000" />
       <workItem from="1622716141418" duration="10429000" />
       <workItem from="1622809391682" duration="342000" />
+      <workItem from="1625415030379" duration="224000" />
     </task>
     <servers />
   </component>

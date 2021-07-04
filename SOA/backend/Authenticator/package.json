@@ -19,6 +19,8 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
+    "redis-connection-pool": "^1.7.4",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "passport-jwt": "^4.0.0"

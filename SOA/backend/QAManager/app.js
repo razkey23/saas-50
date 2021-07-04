@@ -9,8 +9,6 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 
-
-
 // view engine setup
 
 
@@ -21,6 +19,40 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+
+
+const REDIS_PORT = 6379;
+const REDIS_HOST = "localhost";
+const TotalConnections = 20;
+const pool = require('redis-connection-pool')('myRedisPool',{
+  host : REDIS_HOST,
+  port : REDIS_PORT,
+  max_clients : TotalConnections,
+  perform_checks : false ,
+  database : 0 ,
+});
+console.log("connected to redis");
+
+
+pool.hget('subscribers','channel',async (err,data)=>{
+  let currentSubscribers = JSON.parse(data);
+  let alreadySubscribed = false ;
+  let myAddress = 'http://localhost:5000';
+  for (let i=0 ;i <currentSubscribers.length;i++){
+    if (currentSubscribers[i]==myAddress){
+      alreadySubscribed=true
+    }
+  }
+  if (alreadySubscribed==false){
+    currentSubscribers.push(myAddress);
+    pool.hset('subscribers','channel',JSON.stringify(currentSubscribers),()=>{})
+    console.log('subscribed');
+  }
+  else {
+    console.log('already-subscribed');
+  }
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

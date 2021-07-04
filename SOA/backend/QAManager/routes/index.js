@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const  request = require('request');
-
+const axios = require('axios');
+const redis = require('redis');
 //Get answers of a question
 //GET request at localhost:5000/answerOf + question in body ("question":id) as int
 router.get('/AnswersOfQuestion',function(req,res,next) {

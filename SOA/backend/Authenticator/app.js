@@ -47,6 +47,7 @@ console.log("connected to redis");
 
 pool.hget('subscribers','channel',async (err,data)=>{
   let currentSubscribers = JSON.parse(data);
+  //let alreadySubscribed = true ;
   let alreadySubscribed = false ;
   let myAddress = 'http://localhost:8000';
   for (let i=0 ;i <currentSubscribers.length;i++){

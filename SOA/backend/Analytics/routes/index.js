@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const  request = require('request');
+const axios = require('axios');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -8,7 +9,75 @@ router.get('/', function(req, res, next) {
 
 /*QUESTIONS PER KEYWORD*/
 router.get('/QuestionsPerKW',function (req, res, next) {
-  if (!req.body.keyword && !req.body.id) {
+  /*Metadata for authentication */
+  let metadata = req.body;
+  let response ;
+  delete metadata.endpoint;
+  delete metadata.method;
+  metadata = Object.assign({
+    endpoint : "authenticate",
+    method : "get"
+  },metadata);
+  const test =  axios({
+    method : "post",
+    url : 'http://localhost:3001/bus',
+    data : metadata,
+    headers : req.headers
+  }).then(resp=>{
+
+    // AUTHORIZATION SUCCEED
+    if (resp["data"]["status"]=='OK') {
+      if (!req.body.keyword && !req.body.id) {
+        res.json({"error":"Not keyword given"});
+      }
+      else {
+        const requestOptions = {
+          url: "http://localhost:3000/question",
+          method: 'GET',
+          json: {}
+        }
+        request(requestOptions, (err, response, body) =>
+        {
+          if (err) {
+            console.log(err);
+          } else if (response.statusCode === 200) {
+            let temp=[]; //INIT RESULT ARRAY
+            for(x in body) { //PARSE Question JSON
+              if (body[x].keyword.length>0) { //GET KEYWORD ARRAY OBJECT
+                for (kw in body[x].keyword) { //Parse Keyword array of question
+                  if(req.body.keyword) {
+                    if(body[x].keyword[kw].keyword == req.body.keyword){
+                      temp.push(body[x]);
+                    }
+                  }
+                  else if(req.body.id){
+                    if(body[x].keyword[kw].id == req.body.id){
+                      temp.push(body[x]);
+                    }
+                  }
+                }
+              }
+            }
+            res.json(temp);  //Return object
+          } else {
+            console.log(response.statusCode);
+          }
+        });
+      }
+    }
+    // AUTHORIZATION FAILED
+    else {
+      res.json({"status":"Error"})
+    }
+  }).catch(e=>{
+    res.json({"status":"Error"})
+    console.log("error");
+  });
+
+  //console.log(response);
+
+  //axios.post
+  /*if (!req.body.keyword && !req.body.id) {
     res.json({"error":"Not keyword given"});
   }
   else {
@@ -44,7 +113,7 @@ router.get('/QuestionsPerKW',function (req, res, next) {
         console.log(response.statusCode);
       }
     });
-  }
+  } */
 });
 
 

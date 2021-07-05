@@ -36,9 +36,59 @@ const pool = require('redis-connection-pool')('myRedisPool',{
 });
 console.log("connected to redis");
 
-//pool.hset('bus','messages',JSON.stringify([]),()=>{});
-//pool.hset('subscribers','channel',JSON.stringify([]),()=>{});
 
+/*pool.hset('bus','messages',JSON.stringify([]),()=>{});
+pool.hset('subscribers','channel',JSON.stringify([]),()=>{});
+pool.hset('proxy','messages',JSON.stringify([]),()=>{});
+pool.hset('proxy-subscribers','channel',JSON.stringify([]),()=>{});*/
+
+
+
+
+//USED AS PROXY
+app.post('/proxy',async(req,res)=> {
+  const event = req.body;
+  let currentMessages ;
+  let newMessage = {};
+  pool.hget('proxy','messages',async(err,data)=>{
+    currentMessages = JSON.parse(data);
+    newMessage = {
+      "id":currentMessages.length+1,
+      method : event.method ,
+      endpoint : event.endpoint ,
+      event,
+      "timestamp": Date.now()
+    }
+    currentMessages.push(newMessage);
+    pool.hset('proxy','messages',JSON.stringify(currentMessages), () => {
+      pool.hget('proxy-subscribers','channel',  (err,data) => {
+        let subscribers = JSON.parse(data);
+        for (let i =0 ; i <subscribers.length ;i++){
+          console.log(subscribers[i]);
+          axios({
+            method : newMessage.method,
+            url : subscribers[i]+"/"+newMessage.endpoint,
+            data : event ,
+            headers : req.headers
+          }).then(resp=>{
+            console.log(resp)
+            console.log("IN HERE")
+            console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
+            res.json(resp["data"]);
+          }).catch(e=>{
+            console.log(e);
+            //res.send(resp);
+            console.log(subscribers[i],{"status":"lost connection"})
+          });
+        }
+      });
+    });
+  });
+});
+
+
+
+//SERVICE discovery
 app.get('/bus',async(req,res)=> {
   //FIND ABOUT Provided services
   //Service 1 Authenticator
@@ -140,6 +190,7 @@ app.get('/bus',async(req,res)=> {
 });
 
 
+//Service Bus mainly used for Authenticator
 app.post('/bus',async(req,res)=> {
   const event = req.body;
   let currentMessages ;
@@ -153,6 +204,8 @@ app.post('/bus',async(req,res)=> {
       event,
       "timestamp": Date.now()
     }
+    let statusOut = {"status":"Error"}
+    console.log(event)
     currentMessages.push(newMessage);
     pool.hset('bus','messages',JSON.stringify(currentMessages), () => {
       pool.hget('subscribers','channel',  (err,data) => {
@@ -162,21 +215,28 @@ app.post('/bus',async(req,res)=> {
           axios({
             method : newMessage.method,
             url : subscribers[i]+"/"+newMessage.endpoint,
-            data : event
+            data : event ,
+            headers : req.headers
           }).then(resp=>{
+            //res.send(resp);
             //console.log(resp);
             console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
+            console.log("IN HERE")
+            statusOut = {"status":"OK"}
+            res.send(statusOut);
+            //res.send({"status":"OK"});
+
           }).catch(e=>{
+            //DISABLE AUTHORIZATION
+            res.send({"status":"OK"});
             console.log(subscribers[i],{"status":"lost connection"})
           });
         }
-        res.send({"status":"OK"})
+        //res.send(statusOut);
       });
     });
   });
 });
-
-
 
 
 

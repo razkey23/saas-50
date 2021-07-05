@@ -85,11 +85,14 @@ router.post('/signin',
 );
 
 //TEST ENDPOINT to check authentication
-router.get('/whoami',
+router.get('/authenticate',
     passport.authenticate('token',{session:false}),
     function(req,res,next){
-        res.json({user:req.user});
+        res.json({"status":"OK"});
     }
+    /*function(req,res,next){
+        res.json({user:req.user});
+    }*/
 );
 
 router.post('/register', function(req, res, next) {

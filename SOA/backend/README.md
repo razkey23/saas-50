@@ -34,9 +34,10 @@ We use a postgres database with the following credentials :
 2. Open a terminal ,go to /QAManager and execute ```npm run start```  *PORT : 5000*
 3. Open a terminal ,go to /Analytics and execute ```npm run start``` *PORT : 4000*
 4. Open a terminal ,go to /Authenticator and execute ```npm run start``` *PORT : 8000*
-
+5. Open a terminal ,go to /ESB and execute ```npm run start``` *PORT : 3001* (will be used as Proxy)
 
 ## Endpoints
+### Option 1
 **BASEURL : localhost:8000**  
 
 |Endpoint|Method|Parameters in body|Returns|
@@ -50,6 +51,25 @@ We use a postgres database with the following credentials :
 |/AddQuestion|POST|user:{id:"",...} , title:"",text:"",date_asked:""|{status:OK}|
 |/AddAnswer|POST|user:{id:"",...} , text:"",question:{id:"",...},date_answered:""|{status:OK}|
 
+### Option 2 (Will be used in deployment)
+**BASEURL : localhost:3001/proxy**
+Endpoints are exactly as described above but are called somewhat differently. 
 
+ URL : http://localhost:3001/proxy
+ Method : POST
+ Body : Params same as Option 1 + **endpoint:""** , **method:""**
+ Headers : Same as Option 1 (JWT Bearer token)
 
- 
+Sample Call :   
+  URL : http://localhost:3001/proxy  
+  Method : POST  
+  Body : {  
+    "endpoint":"AnswersOfQuestion",  
+    "method":"Get",  
+    "question" : 1,  
+    "username":"testuser",  
+    "password":"testuser"  
+ }  
+ Headers : {   
+   "Authorization" : Bearer Token  
+ }  

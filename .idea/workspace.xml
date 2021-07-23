@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46d96f78-195b-4d37-afb8-af1cac6cc7a5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/MVC/src/API/api.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/API/api.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/auth/auth.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/auth/guards/jwt-auth.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/auth/guards/local-auth.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/src/auth/strategies/local.stategy.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MVC/views/questions.pug" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/Analytics/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/Analytics/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/Analytics/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/Analytics/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/Authenticator/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/Authenticator/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/Authenticator/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/Authenticator/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/ESB/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/ESB/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOA/backend/QAManager/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/SOA/backend/QAManager/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -49,11 +51,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
-    <property name="ts.external.directory.path" value="C:\Users\razkey\git\saas-50\backend\datalayer\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\razkey\git\saas50\SOA\backend\datalayer\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\razkey\git\saas50\MVC\src\Entities" />
       <recent name="C:\Users\razkey\git\saas-50\SOA" />
       <recent name="C:\Users\razkey\git\saas-50\backend\datalayer\src" />
     </key>
@@ -77,7 +80,14 @@
       <workItem from="1622615333446" duration="29344000" />
       <workItem from="1622716141418" duration="10429000" />
       <workItem from="1622809391682" duration="342000" />
-      <workItem from="1625415030379" duration="9670000" />
+      <workItem from="1625415030379" duration="14773000" />
+      <workItem from="1626850782688" duration="556000" />
+      <workItem from="1626851371099" duration="3471000" />
+      <workItem from="1626936696902" duration="487000" />
+      <workItem from="1626937208295" duration="713000" />
+      <workItem from="1626938023040" duration="516000" />
+      <workItem from="1626938595928" duration="11158000" />
+      <workItem from="1626964694368" duration="9026000" />
     </task>
     <servers />
   </component>
@@ -117,14 +127,17 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SOA/backend/Authenticator/routes/index.js</url>
           <line>65</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SOA/backend/QAManager/routes/index.js</url>
           <line>7</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/SOA/backend/Authenticator/routes/index.js</url>
+          <line>279</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

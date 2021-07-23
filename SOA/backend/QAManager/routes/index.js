@@ -23,7 +23,7 @@ router.get('/AnswersOfQuestion',function(req,res,next) {
         let temp=[]; //INIT RESULT ARRAY
         for(x in body) { //PARSE Question JSON
           console.log(body[x]);
-          if(body[x].question.id==req.body.question) {
+          if(body[x].question.id==req.body.question.id) {
             let customobj={};
             customobj.id=body[x].id;
             customobj.text=body[x].text;

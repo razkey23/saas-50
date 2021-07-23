@@ -10,6 +10,7 @@ import { KeywordService } from 'src/Entities/keyword/keyword.service';
 
 // @ts-ignore
 @Module({
+    imports:[],
     //imports : [TypeOrmModule.forFeature([User])],
     controllers: [APIController],
     providers: [KeywordService,AnswerService,QuestionService,UserService]

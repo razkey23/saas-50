@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46d96f78-195b-4d37-afb8-af1cac6cc7a5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MVC/src/API/api.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/API/api.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/auth/auth.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/auth/guards/jwt-auth.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/auth/guards/local-auth.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/auth/strategies/jwt.strategy.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/src/auth/strategies/local.stategy.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MVC/views/questions.pug" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +80,7 @@
       <workItem from="1626937208295" duration="713000" />
       <workItem from="1626938023040" duration="516000" />
       <workItem from="1626938595928" duration="11158000" />
-      <workItem from="1626964694368" duration="9026000" />
+      <workItem from="1626964694368" duration="9405000" />
     </task>
     <servers />
   </component>

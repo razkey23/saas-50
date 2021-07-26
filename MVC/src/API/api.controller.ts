@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Render} from '@nestjs/common';
 import {request} from "express";
 import {AppService} from "../app.service";
 import {KeywordService} from "../Entities/keyword/keyword.service";
@@ -26,6 +26,7 @@ export class APIController {
 
     //Works but returns EVERYTHING ,need to create a custom obj
     @Get('/QuestionsPerKW')
+    @Render('questions')
     //@UseGuards(JwtAuthGuard)
     async questionsPerKW(@Req() req:Request)  {
         let questions = await this.questionService.findAll();
@@ -47,7 +48,9 @@ export class APIController {
                 }
             }
         }
-        return temp;
+        return {"result" : temp};
+        //return { title:'Hello'};
+        //return temp;
     }
 
 
@@ -85,7 +88,7 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return temp;
+        return {"result":temp};
     }
 
     //INPUT OF TYPE "question":x x = id
@@ -107,7 +110,7 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return temp;
+        return {"result":temp};
     }
 
 
@@ -130,7 +133,7 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return temp;
+        return {"result":temp};
     }
 
 
@@ -155,7 +158,7 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return temp;
+        return {"result":temp};
     }
 
 
@@ -185,7 +188,7 @@ export class APIController {
                     console.log("Error Occured");
                     return {"message" :err.message};
                 });
-        return x;
+        return {"result":x};
     }
 
 
@@ -211,7 +214,7 @@ export class APIController {
                 console.log("Error Occured");
                 return {"message" :err.message}
             });
-        return x;
+        return {"result":x};
 
     }
 }

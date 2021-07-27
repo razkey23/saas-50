@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import {AuthService} from "./auth.service";
 import {LocalAuthGuard} from "./guards/local-auth.guard";
 import {User} from "../Entities/user/entities/user.entity";
-import {UserService} from "../../dist/user/user.service";
+import {UserService} from "../Entities/user/user.service";
 import {HttpService} from "@nestjs/axios";
 import {map} from "rxjs/operators";
 
@@ -33,8 +33,11 @@ export class AuthController {
     @Post('register')
     async register(@Req() req : Request) : Promise <{ message:string}> {
         const saltOrRounds = 10;
-        if (!req.body.password || !req.body.username){
+        if (!req.body.password || !req.body.username || ! req.body.password2){
             return { message : "No password Given or Username Given"};
+        }
+        else if (req.body.passqord !== req.body.passqord2) {
+            return { message : "Passwords need to match"};
         }
         else {
             const hash = await bcrypt.hash(req.body.password, saltOrRounds);

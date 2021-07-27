@@ -1,0 +1,25 @@
+html 
+    head
+        title='Questions per keyword'
+    body
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
+        canvas#myChart(style='width:100%;max-width:700px; margin-left: 400px; margin-top: 200px') 
+
+        script. 
+            
+            var keywords = ["Machine-Learning", "AI", "javascript", "java", "python", "Algorithms", "Graph Theory", "c++", "haskell"];
+            var data = #{JSON.stringify(values)};
+            var colors = ["blue", "red", "green", "black", "orange", "pink", "brown", "purple", "yellow"];   
+
+            new Chart("myChart", {
+            type: "bar",
+            data: {
+                labels: keywords,
+                datasets: [{
+                backgroundColor: colors,
+                data: data
+                }]
+            },
+            options: {}
+            });
+        

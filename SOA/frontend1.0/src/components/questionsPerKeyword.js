@@ -8,40 +8,40 @@ export default class QuestionsPerKeyword extends Component {
     constructor(){
         super()
         this.state={
-            keyword:'',
-            questions:[]
+            keywords: ["Machine-Learning", "AI", "javascript", "java", "python", "Algorithms", "Graph Theory", "c++", "haskell"],
+            keyword: '',
+            questions: []
         }
-    }
-
-    componentDidMount(){
-        //get alla available keywords??
     }
 
     loadQuestions(){
         axios({
-            method: 'GET',
-            url: `${baseUrl}/QuestionsPerKW`,
-            data: {
-              keyword: this.state.keyword,
+            method: 'POST',
+            url: `http://localhost:3001/proxy`,
+            body: {
+              "endpoint": "QuestionsPerKW",
+              "keyword": this.state.keyword,
+              "method": "GET"
+            },
+            Headers:{
+              "Authorization": "Bearer Token"
             }
-          }).then(function(response) {
-            this.state.questions=response
-          }).catch(function(error) {
+        }).then(function(response) {
+            this.state.questions=response;
+        }).catch(function(error) {
             alert(error)
-          })
+        })
     }
 
     render() {
         return (
-            // TODO create how to display
-                <div className="footer">
-                    <p>about</p>
-                    <p>contact us</p>
-                    <p>project documentation</p>
-                    <p>link on github</p>
-                    <p>cource materials</p>
-                </div>
-        
+            <div className="footer">
+                <p>about</p>
+                <p>contact us</p>
+                <p>project documentation</p>
+                <p>link on github</p>
+                <p>cource materials</p>
+            </div>
         );
     }
 }

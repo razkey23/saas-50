@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from 'axios'
-import Cookies from 'universal-cookie'
 
 const baseUrl = 'http://localhost:8000'
 export default class Login extends Component {
@@ -29,16 +28,19 @@ export default class Login extends Component {
   login(){
     axios({
       method: 'POST',
-      url: `${baseUrl}/signin`,
-      data: {
-        username: this.state.username,
-        password: this.state.password
+      url: `http://localhost:3001/proxy`,
+      body: {
+        "endpoint": "signin",
+        "username": this.state.username,
+        "password": this.state.password,
+        "method": "POST"
+      },
+      Headers:{
+        "Authorization": "Bearer Token"
       }
     }).then(function(response) {
-      const cookie = new Cookies();
-      var d = new Date();
-      d.setTime(d.getTime()+ (5*60*60*1000));
-      cookie.set('token', response, { path: '/', expires: d})
+      localStorage.setItem('token', response);
+      this.props.history.push('/mypage');
     }).catch(function(error) {
       alert(error)
     })

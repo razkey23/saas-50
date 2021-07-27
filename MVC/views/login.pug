@@ -1,0 +1,20 @@
+html
+    head 
+        title Login
+    body
+        div(class='auth-wrapper')
+            form(class='auth-inner' method='POST' action='/auth/signin')
+                h3 Login Form
+                br
+                p 
+                    | username: 
+                    input(name='username', value='', type='text')
+                    br
+                    br
+                    br
+                    | password: 
+                    input(name='password', value='', type='password')
+                    br
+                    br
+                    
+                button(class='btn btn-primary btn-block' type='submit') Login

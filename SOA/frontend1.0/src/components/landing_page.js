@@ -6,23 +6,18 @@ export default class Login extends Component {
 
     constructor() {
         super();
-    
-        this.test = this.test.bind(this);
     }
-    test() {
-        alert("function executed on clicking div");
-    }
-    
+
     render() {
         return (
             <div>
                 <div class="ask-me"><h2>Welcome to AskMeAnything</h2></div>
                 <div className="home-pages">  
                     <Link to = "/login" >
-                        <div className='home-box'>questions per keyword graph/table</div>
+                        <div className='home-box'>questions per keyword</div>
                     </Link>
                     <Link to = "/login" >
-                        <div className='home-box'> questions per day/period graph/table</div>
+                        <div className='home-box'> questions per day/period</div>
                     </Link>
                     <Link to = "/login" >
                         <div className='home-box'> ask new question</div>

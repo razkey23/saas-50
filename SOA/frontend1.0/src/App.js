@@ -17,7 +17,7 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
+            {/* <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link className="nav-link" to={"/login"}>Login</Link>
               </li>
@@ -38,6 +38,14 @@ function App() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to={"/answer"}>Answer</Link>
+              </li>
+            </ul>  */}
+            <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+                <Link className="nav-link" to={"/login"}>Home-page</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/logout"}>Logout</Link>
               </li>
             </ul>
           </div>

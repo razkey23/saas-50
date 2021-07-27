@@ -1,0 +1,52 @@
+.home-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    display: flex;
+    padding: 10px 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+    margin-top:100px;
+  }
+
+.footer {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    bottom: 10px;
+  }
+.auth-wrapper {
+    padding-top: 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+.auth-inner {
+    width: 500px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all .3s;
+}
+
+
+.ask-me {
+    padding-top: 10%;
+    padding-left: 10%;
+    font-size: large;
+    text-align: left;
+  }
+
+  .question-block {
+    margin-left: 50px; 
+    margin-top: 50px; 
+    float: left; 
+    width: 450px; 
+    height: 600px;
+  }

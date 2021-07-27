@@ -7,7 +7,7 @@ import {AnswerService} from "../Entities/answer/answer.service";
 import {Keyword} from "../Entities/keyword/entities/keyword.entity";
 import { Request } from 'express';
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
-import {QuestionService} from "../../dist/question/question.service";
+import {QuestionService} from "../Entities/question/question.service";
 /*Here I have to create the endpoints*/
 
 @Controller('api')

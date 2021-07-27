@@ -38,24 +38,24 @@ export default class SignUp extends Component {
     if(this.state.password === this.state.password_again){
       axios({
         method: 'POST',
-        url: `${baseUrl}/register`,
-        data: {
-          username: this.state.username,
-          password: this.state.password
+        url: `http://localhost:3001/proxy`,
+        body: {
+          "endpoint": "register",
+          "username": this.state.username,
+          "password": this.state.password,
+          "method": "POST"
+        },
+        Headers:{
+          "Authorization": "Bearer Token"
         }
       }).then(function(response) {
-        const cookie = new Cookies();
-        var d = new Date();
-        d.setTime(d.getTime()+ (5*60*60*1000));
-        cookie.set('token', response, { path: '/', expires: d});
-        this.props.history.push('/mypage')
+        this.props.history.push('/login');
       }).catch(function(error) {
         alert(error)
       })
-      
     }
     else {
-      alert('no matching passwords')
+      alert('No matching passwords')
     }
   }
 

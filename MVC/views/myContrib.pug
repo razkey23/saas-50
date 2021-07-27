@@ -1,0 +1,22 @@
+html 
+    head
+        title='My questions - My answers'
+    body
+       
+        table(style="width: 100%; border='1'")
+            tr 
+                th Question title 
+                th Question text 
+            for question, i in questions 
+                tr 
+                    th #{question.title}
+                    th #{question.text} 
+        
+        table(style="width: 100%; border='1'")
+            tr 
+                th Answer text 
+                th Answer date 
+            for answer, i in answers 
+                tr 
+                    th #{answer.text} 
+                    th #{answer.date}

@@ -115,7 +115,8 @@ export class APIController {
 
 
     //INPUT OF TYPE "User":x ,x=id
-    @Get('/AnswersOfUser')
+    @Get('/MyContribution')
+    @Render('myContrib')
     //@UseGuards(JwtAuthGuard)
     async answersOfUser(@Req() req:Request){
         let answers = await this.answerService.findAll();
@@ -133,7 +134,23 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return {"result":temp};
+        
+
+        let questions = await this.questionService.findAll();
+        let temp2=[]
+        for (let x in questions) {
+            if(questions[x].user.id==req.body.user) {
+                let customobj={
+                    id:questions[x].id,
+                    text:questions[x].text,
+                    title:questions[x].title,
+                    date_asked:questions[x].date_asked
+
+                };
+                temp2.push(customobj);
+            }
+        }
+        return {"answers":temp, "questions": temp2};
     }
 
 
@@ -215,6 +232,6 @@ export class APIController {
                 return {"message" :err.message}
             });
         return {"result":x};
-
+        //redirect to 
     }
 }

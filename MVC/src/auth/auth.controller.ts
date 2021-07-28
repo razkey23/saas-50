@@ -27,6 +27,8 @@ export class AuthController {
     @Post('signin')
     login(@Req() req : Request) : {token:string} {
         return this.authService.login(req.user as User);
+        //if fail redirect to 'homepage 
+        //redirect to mypage
     }
 
     //Unprotected endpoint (register works)

@@ -14,14 +14,17 @@ export default class Login extends Component {
                         { localStorage.getItem("token") === null ? (
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/homepage"}>Home Page</Link>
+                            <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/login"}>Login</Link>
+                            <Link className="nav-link" to={"/signup"}>SignUp</Link>
                             </li>
                         </ul>
                         ) : (
                             <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                            <Link className="nav-link" to={"/homepage"}>Home Page</Link>
+                            </li>
                             <li className="nav-item">
                             <Link className="nav-link" to={"/mypage"}>My Page</Link>
                             </li>
@@ -38,17 +41,17 @@ export default class Login extends Component {
 
                 <div class="ask-me"><h2>Welcome to AskMeAnything</h2></div>
                 <div className="home-pages">  
-                    <Link to = "/login" >
-                        <div className='home-box'>questions per keyword graph/table</div>
+                    <Link to="/questionsPerKeyword" >
+                        <div className='home-box'>Questions per keyword</div>
                     </Link>
-                    <Link to = "/login" >
-                        <div className='home-box'> questions per day/period graph/table</div>
+                    <Link to = "/questionsPerDay" >
+                        <div className='home-box'> Questions per period</div>
                     </Link>
                     <Link to = "/ask" >
-                        <div className='home-box'> ask new question</div>
+                        <div className='home-box'> Ask new question</div>
                     </Link>
                     <Link to = "/answer" >
-                        <div className='home-box'>answer a question</div>
+                        <div className='home-box'> Answer a question</div>
                     </Link>
                 </div>
                 <div className="footer">

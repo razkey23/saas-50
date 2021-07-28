@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-//import { useTable } from 'react-table'; not sure which table to use
 import axios from 'axios'
-import Cookies from "universal-cookie";
 import jwt from 'jwt-decode'
 import { Link } from "react-router-dom";
+import BootstrapTable from "react-bootstrap-table-next";
 
 
-const cookies = new Cookies();
-const baseUrl = 'http://localhost:8000'
 export default class Answer extends Component {
 
     constructor() {
@@ -20,7 +16,6 @@ export default class Answer extends Component {
             answers: [],
             questions: [],
             answer:'',
-            token: cookies.get('token')
         }
     }
 
@@ -30,21 +25,25 @@ export default class Answer extends Component {
     }
 
     componentDidMount(){
-        // fetch questions from database
+        // fetch questions from database get all questions
     }
 
     getAnswer(e) {
         axios({
-            method: 'GET',
-            url: `${baseUrl}/AnswersOfQuestion`,
+            method: 'POST',
+            url: `http://localhost:3001/proxy`,
+            body: {
+              "endpoint": "AnswersOfQuestion",
+              "keyword": this.state.keyword,
+              "method": "GET"
+            },
         }).then(function(response) {
             this.setState({
-                answer: e.target.value
+                answer: response
             })
         }).catch(function(error) {
             alert(error)
         })
-        
     }
 
     getQuestion(e){
@@ -55,39 +54,35 @@ export default class Answer extends Component {
     }
 
     submitAnswer(){
-        const userId = jwt(this.state.token).id;
+        const userId = jwt(localStorage.getItem("token")).id;
+        const date = new Date();
         axios({
             method: 'POST',
-            url: `${baseUrl}/AddAnswer`,
-            //headers: {'X-OBSERVATORY-AUTH': `${token}`},
-            data: {
-                userId: userId,
-                question: this.state.questionAnswered,
-                text: this.state.answer,
-                date: (new Date()).toString()
+            url: `http://localhost:3001/proxy`,
+            body: {
+                "endpoint": "AddAnswer",
+                "user": {"id": userId},
+                "question": this.state.questionAnswered,
+                "text": this.state.answer,
+                "date_asked": [date.getFullYear(), ('0'+(date.getMonth()+1)).slice(-2), ('0'+(date.getDate())).slice(-2)].join('-'),
+                "method": "POST"
+            },
+            Headers:{
+              "Authorization": "Bearer "+localStorage.getItem("token")
             }
         }).then(function(response) {
-            this.history.push('/myhomepage')
+            this.props.history.push('/myhomepage')
         }).catch(function(error) {
             alert(error)
-        })
-        
+        })       
     }
 
 
     render() {
-        const columns= [
-            {
-                label: 'Username',
-                field: 'username',
-                sort: 'asc',
-            },
-            {
-                label: 'Answer',
-                field: 'Answer',
-                sort: 'asc',
-            },
-        ]
+        var columns = [
+            { dataField: 'id', text: 'Id' },
+            { dataField: 'text', text: 'Answer' },
+          ]
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -102,9 +97,15 @@ export default class Answer extends Component {
                             <li className="nav-item">
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                            </li>
                         </ul>
                         ) : (
                             <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/homepage"}>Home Page</Link>
+                            </li>
                             <li className="nav-item">
                             <Link className="nav-link" to={"/mypage"}>My Page</Link>
                             </li>
@@ -135,18 +136,13 @@ export default class Answer extends Component {
                     {/* make it be a select from all the questions */}
                     <div className="form-group " style={{height:300+"px"}}>
                         <label style={{width:20+'%'}}>Available Answers:</label>
-                        <MDBTable 
-                            scrollY
-                            bordered
-                            striped
-                        >
-                            <MDBTableHead columns={columns} />
-                            <MDBTableBody rows={this.state.answers.map((item)=>({
-                                name: item.name,
-                                answer: item.user_type
-                            }))}/>
-                        </MDBTable>
-                        {/*<textarea className="form-control" rows="5" style={{resize:"none"}} placeholder="Available Answers"></textarea>*/}
+                        <div style={{marginTop:10+"px"}}>
+                            <BootstrapTable
+                                data={ this.state.answers }
+                                columns={ columns }
+                                keyField='id'>
+                            </BootstrapTable>
+                        </div>
                     </div>
                     
 

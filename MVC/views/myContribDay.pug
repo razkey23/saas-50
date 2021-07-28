@@ -1,10 +1,11 @@
 html 
     head
         title='My questions - My answers'
+    
     body
-       
-        table(style="width: 100%; border='1'")
-            tr 
+        h2(style="margin-left:5%;") My Questions 
+        table(style="width: 90%; margin-left:5%; border='1'")
+            tr
                 th Question title 
                 th Question text 
                 th Question date
@@ -13,8 +14,8 @@ html
                     th #{question.title}
                     th #{question.text} 
                     th #{answer.date}
-        
-        table(style="width: 100%; border='1'")
+        h2(style="margin-left:5%;") My Answers 
+        table(style="width: 90%; margin-left:5%; border='1'")
             tr 
                 th Answer text 
                 th Answer date 

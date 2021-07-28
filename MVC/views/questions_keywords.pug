@@ -3,7 +3,7 @@ html
         title='Questions per keyword'
     body
         script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js")
-        canvas#myChart(style='width:100%;max-width:700px; margin-left: 400px; margin-top: 200px') 
+        canvas#chart(style='width:70%; margin-left: 150px; margin-top: 150px') 
 
         script. 
             
@@ -11,15 +11,19 @@ html
             var data = #{JSON.stringify(values)};
             var colors = ["blue", "red", "green", "black", "orange", "pink", "brown", "purple", "yellow"];   
 
-            new Chart("myChart", {
-            type: "bar",
-            data: {
-                labels: keywords,
-                datasets: [{
-                backgroundColor: colors,
-                data: data
-                }]
-            },
-            options: {}
+            new Chart("chart", {
+                type: "pie",
+                data: {
+                    labels: keywords,
+                    datasets: [{
+                        backgroundColor: colors,
+                        data: data
+                    }]
+                },
+                options: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
             });
         

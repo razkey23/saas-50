@@ -1,43 +1,52 @@
 import React, { Component } from "react";
-import Cookies from "universal-cookie";
 import jwt from 'jwt-decode'
 import axios from 'axios'
 import { Link } from "react-router-dom";
-
-
-const cookies = new Cookies();
-const baseUrl = 'http://localhost:8000'
+import Select from "react-select";
 
 export default class Ask extends Component {
 
     constructor() {
         super();
         this.state = {
-            question_name: '',
+            init_keywords: [
+                {'id':1,"name": "Machine-Learning"},
+                {'id':2,"name": "AI"},
+                {'id':3,"name": "Python"},
+                {'id':4,"name": "Java"},
+                {'id':5,"name": "C++"},
+                {'id':6,"name": "Javascript"},
+                {'id':7,"name": "Algorithms"},
+                {'id':8,"name": "Graph Theory"},
+                {'id':9,"name": "Haskell"}
+            ],            question_name: '',
             question_text: '',
             keywords: [],
-            token: cookies.get('token')
         }
     }
 
     sumbitQuestion(){
-        // pass the token in the headers
-        const userId = jwt(this.state.token).id;
+        const userId = jwt(localStorage.getItem("token")).id;
+        const date = new Date();
         axios({
-            method: 'POST',
-            url: `${baseUrl}/AddQuestion`,
-            data: {
-                userId: userId,
-                title: this.state.question_name,
-                text: this.state.question_text,
-                keywords: this.state.keywords,
-                date_asked: (new Date()).toString()
-            }
-          }).then(function(response) {
-            this.history.push('/myhomepage')
-          }).catch(function(error) {
-            alert(error)
-          })
+          method: 'POST',
+          url: `http://localhost:3001/proxy`,
+          body: {
+            "userId": userId,
+            "title": this.state.question_name,
+            "text": this.state.question_text,
+            "keywords": this.state.keywords,
+            "date_asked": [date.getFullYear(), ('0'+(date.getMonth()+1)).slice(-2), ('0'+(date.getDate())).slice(-2)].join('-'),
+            "method": "POST"
+          },
+          Headers:{
+            "Authorization": "Bearer "+localStorage.getItem("token")
+          }
+        }).then(function(response) {
+          this.props.history.push('/mypage');
+        }).catch(function(error) {
+          alert(error)
+        })
     }
 
     updateTitle(evt){
@@ -54,8 +63,8 @@ export default class Ask extends Component {
 
     updateKeywords(evt){
         this.setState({
-            keywords: evt.target.value.split(",").join(" ").split(" ").filter(function (i) { return i })
-        });
+            keywords: evt
+        })
     }
 
     routeChange() {
@@ -78,9 +87,15 @@ export default class Ask extends Component {
                             <li className="nav-item">
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                            </li>
                         </ul>
                         ) : (
                             <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/homepage"}>Home Page</Link>
+                            </li>
                             <li className="nav-item">
                             <Link className="nav-link" to={"/mypage"}>My Page</Link>
                             </li>
@@ -105,10 +120,18 @@ export default class Ask extends Component {
                         <label style={{width:20+'%'}}>Question text:</label>
                         <textarea className="form-control" rows="5" style={{resize:"none"}} onChange={evt => this.updateText(evt)}></textarea>
                     </div>
-
-                    <div className="horizontal-orientation">
-                        <label style={{width:20+'%'}}>Keywords:</label>
-                        <input type="text" className="form-control" onChange={evt => this.updateKeywords(evt)}></input>
+                    
+                    <div style={{paddingLeft:5+"%", width:95+"%", marginBottom:50+"px"}}>
+                        <label style={{width:20+'%', marginBottom:10+"px"}}>Select Keywords:</label>
+                        <Select
+                            class="form-control"
+                            placeholder="Select Keyword"
+                            isMulti
+                            options={this.state.init_keywords}
+                            getOptionLabel={(option)=>option.name}
+                            getOptionValue={(option)=>option.id}
+                            onChange={e => this.updateKeywords(e)}
+                        />
                     </div>
                     
                     <div className="buttons" style={{marginLeft:"20%"}}>

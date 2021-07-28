@@ -5,9 +5,10 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import jwt from 'jwt-decode'
 
 
-export default class QuestionsPerDay extends Component {
+export default class ContribUserDate extends Component {
 
     constructor(){
         super()
@@ -21,6 +22,7 @@ export default class QuestionsPerDay extends Component {
 
     handleApply(event, picker) {
         var d1 = new Date(picker.startDate), d2 = new Date(picker.endDate);
+        const userId = jwt(localStorage.getItem("token")).id;
         this.setState({
             startDate: [d1.getFullYear(), ('0'+(d1.getMonth()+1)).slice(-2), ('0'+(d1.getDate())).slice(-2)].join('-'),
             endDate: [d2.getFullYear(), ('0'+(d2.getMonth()+1)).slice(-2), ('0'+(d2.getDate())).slice(-2)].join('-')
@@ -29,13 +31,14 @@ export default class QuestionsPerDay extends Component {
           method: 'POST',
           url: `http://localhost:3001/proxy`,
           body: {
-            "endpoint": "QuestionsPerDay",
+            "endpoint": "ContribUserPerDay",
             "datefrom": this.state.startDate,
             "dateto": this.state.endDate,
+            "user": userId,
             "method": "GET"
           },
           Headers:{
-            "Authorization": "Bearer Token"
+            "Authorization": "Bearer "+localStorage.getItem("token")
           }
         }).then(function(response) {
             this.setState({
@@ -43,11 +46,6 @@ export default class QuestionsPerDay extends Component {
         })
         }).catch(function(error) {
           alert(error)
-        })
-        this.setState({
-            questions: [{ id: 1, name: 'George', animal: 'Monkey', temp: 1},
-            { id: 2, name: 'Jeffrey', animal: 'Giraffe' },
-            { id: 3, name: 'Alice', animal: 'Giraffe' }]
         })
     }
     render() {

@@ -1,12 +1,12 @@
-Lhtml
+html 
     head 
         title Answer a question
     body 
         form(class='ask-me' method='POST' action='..' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 700px")
             p(style="margin-left: 50px") Select question
             select#menu1(name='question', size=1, style="margin-left: 50px")
-                        for question in questions 
-                            option(value=question.id) #{question.title} - #{question.text}
+                for question in questions 
+                    option(value=question.id) #{question.title} - #{question.text}
             br 
             br 
             p(style="margin-left: 50px") Your answer here

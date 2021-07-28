@@ -1,7 +1,17 @@
 html 
     head 
         title Sign up page
-    body 
+    body
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page 
          div(class='auth-wrapper')
             form(class='auth-inner' method='POST' action='/auth/register')
                 h3 Sign up here

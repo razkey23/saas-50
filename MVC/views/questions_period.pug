@@ -2,18 +2,37 @@ html
     head
         title='Questions per period'
     body
-        .card(class="question-block")
-            .card-block
-            h2.card-title Questions of the last week
-            p.card-text 
-            for question in weekQuestions 
-                p #{question.text}
-
-        .card(class="question-block")
-            .card-block
-            h2.card-title Questions of the last month
-            p.card-text 
-            for question in monthQuestions 
-                p #{question.text}
-       
-        
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
+        h2(style="margin-left:5%; margin-top:50px; margin-bottom:10px") Questions of the last week
+        table(style="width: 90%; margin-left:5%; border='1'")
+            tr
+                th Question title 
+                th Question text 
+                th Question date
+            for question in questionsW
+                tr 
+                    th #{question.title}
+                    th #{question.text} 
+                    th #{answer.date}
+        h2(style="margin-left:5%;margin-top:50px; margin-bottom:10px") My Answers 
+        table(style="width: 90%; margin-left:5%; border='1'")
+            tr 
+                th Question title 
+                th Question text 
+                th Question date
+            for answer in questionsM 
+                tr 
+                    th #{question.title}
+                    th #{question.text} 
+                    th #{answer.date}

@@ -36,13 +36,12 @@ const pool = require('redis-connection-pool')('myRedisPool',{
 });
 console.log("connected to redis");
 
-
-/*pool.hset('bus','messages',JSON.stringify([]),()=>{});
+/*
+pool.hset('bus','messages',JSON.stringify([]),()=>{});
 pool.hset('subscribers','channel',JSON.stringify([]),()=>{});
 pool.hset('proxy','messages',JSON.stringify([]),()=>{});
-pool.hset('proxy-subscribers','channel',JSON.stringify([]),()=>{});*/
-
-
+pool.hset('proxy-subscribers','channel',JSON.stringify([]),()=>{});
+*/
 
 
 //USED AS PROXY
@@ -218,16 +217,19 @@ app.post('/bus',async(req,res)=> {
             data : event ,
             headers : req.headers
           }).then(resp=>{
+            console.log(resp);
             //res.send(resp);
             //console.log(resp);
             console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
             console.log("IN HERE")
             statusOut = {"status":"OK"}
+            //res.send(resp["data"]);
             res.send(statusOut);
             //res.send({"status":"OK"});
 
           }).catch(e=>{
             //DISABLE AUTHORIZATION
+            //res.send({"status":"Authorization Failed"});
             res.send({"status":"OK"});
             console.log(subscribers[i],{"status":"lost connection"})
           });

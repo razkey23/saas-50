@@ -1,7 +1,7 @@
-import {Controller, Get, Render} from '@nestjs/common';
+import {Controller, Get, Post, Render, Req, Res} from '@nestjs/common';
 import { AppService } from './app.service';
 import {QuestionService} from "./Entities/question/question.service";
-import {request} from "express";
+import {Request, request} from "express";
 import {KeywordService} from "./Entities/keyword/keyword.service";
 import {UserService} from "./Entities/user/user.service";
 
@@ -11,6 +11,15 @@ export class AppController {
   constructor(private readonly appService: AppService,
               private readonly keywordService : KeywordService,
               private readonly userService : UserService) {}
+
+
+  @Get()
+  @Render('landing_page')
+  login1() {
+    return {status:"200"};
+  }
+
+
 
   /*@Get()
   @Render('questions')

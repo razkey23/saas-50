@@ -16,6 +16,8 @@ import { AuthModule } from './auth/auth.module';
 import {AuthController} from "./auth/auth.controller";
 import {AuthService} from "./auth/auth.service";
 import {JwtModule, JwtService} from "@nestjs/jwt";
+import {APIController} from "./API/api.controller";
+
 @Module({
   imports: [ApiModule,QuestionModule, UserModule, AnswerModule, KeywordModule,TypeOrmModule.forRoot(config), AuthModule],
   controllers: [AppController],

@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Render} from '@nestjs/common';
 import {Request} from 'express';
 import * as bcrypt from 'bcrypt';
 import {AuthService} from "./auth.service";
@@ -15,6 +15,11 @@ export class AuthController {
         private readonly userService : UserService,
         private httpService: HttpService) {}
 
+    @Get()
+    @Render('login')
+    login1() {
+        return {status:"200"};
+    }
 
     @Get()
     async findAll() {
@@ -26,6 +31,8 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('signin')
     login(@Req() req : Request) : {token:string} {
+        console.log("GOT HERE");
+        console.log(req.body)
         return this.authService.login(req.user as User);
     }
 
@@ -36,7 +43,7 @@ export class AuthController {
         if (!req.body.password || !req.body.username || ! req.body.password2){
             return { message : "No password Given or Username Given"};
         }
-        else if (req.body.passqord !== req.body.passqord2) {
+        else if (req.body.password !== req.body.password2) {
             return { message : "Passwords need to match"};
         }
         else {

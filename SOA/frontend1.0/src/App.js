@@ -23,7 +23,7 @@ function App() {
             <Route path="/mypage" component={MyPage} />
             <Route path="/ask" component={Ask} />
             <Route path="/answer" component={Answer} />
-            <Route path="/logout" compontent={Logout} />
+            <Route path="/logout" component={Logout} />
           </Switch>
       </div>
     </div></Router>

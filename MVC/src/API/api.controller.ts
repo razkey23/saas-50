@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Render} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Render, Res} from '@nestjs/common';
 import {request} from "express";
 import {AppService} from "../app.service";
 import {KeywordService} from "../Entities/keyword/keyword.service";
@@ -22,6 +22,14 @@ export class APIController {
     findAll(@Req() request:Request): Promise<Keyword[]> {
         console.log(request);
         return this.keywordService.findAll();
+    }
+
+    @Get('/home')
+    @Render('landing_page')
+    async home(@Req() req: Request,@Res() res) {
+        res.body = req.body;
+        res.redirect('/api/QuestionsPerKW');
+        return {status:"OK"};
     }
 
     //Works but returns EVERYTHING ,need to create a custom obj
@@ -112,6 +120,8 @@ export class APIController {
         }
         return {"result":temp};
     }
+
+
 
 
     //INPUT OF TYPE "User":x ,x=id

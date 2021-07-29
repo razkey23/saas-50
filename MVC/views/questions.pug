@@ -1,2 +1,7 @@
-for x in result
-    p #{x.title}
+- let authorized = false
+if !result
+    for x in result
+        p #{x.title}
+    h1 "GOT IN HERE"
+else
+    p "Hello"

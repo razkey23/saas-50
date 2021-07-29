@@ -69,7 +69,8 @@ passport.use('token', new JWTStrategy(
     },
     function(token,done){
         return done(null, { username: token.username})
-    }
+    },
+
 ));
 
 //passport.authenticate('signin',{session: false}),

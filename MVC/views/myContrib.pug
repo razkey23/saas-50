@@ -14,20 +14,32 @@ html
                     li.col-md-2.col-md-offset-1 Logout
                 a(href='http://localhost:3000/api/signup')
                     li.col-md-2 Register
-        table(style="width: 100%; border='1'")
+        h2(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") My Questions
+        table(style="width: 90%; margin-left:5%")
             tr 
-                th Question title 
-                th Question text 
+                th(class="table-headers") Question title 
+                th(class="table-headers") Question text 
             for question in questions 
-                tr 
-                    th #{question.title}
-                    th #{question.text} 
-        
-        table(style="width: 100%; border='1'")
+                if (i % 2)
+                    tr(style="background-color:LightCyan")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{question.text}
+                else
+                    tr(style="background-color:beige")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{question.text}
+                
+        h2(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") My Answers
+        table(style="width: 90%; margin-left:5%")
             tr 
-                th Answer text 
-                th Answer date 
+                th(class="table-headers") Answer text 
+                th(class="table-headers") Answer date 
             for answer in answers 
-                tr 
-                    th #{answer.text} 
-                    th #{answer.date_answered}
+                if (i % 2)
+                    tr(style="background-color:LightCyan")
+                        th(class="table-content") #{answer.text}
+                        th(class="table-content") #{answer.date_answered}
+                else
+                    tr(style="background-color:beige")
+                        th(class="table-content") #{answer.text}
+                        th(class="table-content") #{answer.date_answered}

@@ -9,22 +9,19 @@ html
                     li.col-md-2.col-md-offset-1 Home Page
                 a(href="http://localhost:3000/api/logout")
                     li.col-md-2.col-md-offset-1 Logout
-        h2(style="margin-left: 500px") My.AskMeAnything
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/myContributions' style="color: black;") My questions #[br] My answers
-
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/myContributions' style="color: black;") My contributins per day
-        
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/AskQuestion' style="color: black;") Ask new question
-        
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/AnswerQuestion' style="color: black;") Answer a question
+        h1(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") My.AskMeAnything
+        div(class="home-pages")
+            div(class='home-box' style="background-color: cornsilk")
+                a(href='http://localhost:3000/api/myContributions' style="color: black;") My questions #[br] My answers
+                
+            div(class='home-box' style="background-color: lightcyan")
+                a(href='http://localhost:3000/api/myContributions' style="color: black;") My contributins per day
+                
+            div(class='home-box' style="background-color: palegreen")
+                a(href='http://localhost:3000/api/AskQuestion' style="color: black;") Ask new question
+                
+            div(class='home-box' style="background-color: lavender")
+                a(href='http://localhost:3000/api/AnswerQuestion' style="color: black;") Answer a question
         
         .div(class='footer')
             a(href="/")  about

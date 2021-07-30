@@ -15,15 +15,17 @@ html
                     li.col-md-2.col-md-offset-1 Logout
                 a(href='http://localhost:3000/api/signup')
                     li.col-md-2 Register
-        form(class='ask-me' method='POST' action='submitQuestion' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 400px")
-            h3 Ask a question
-            p 
-                | Question title: 
-                input(name='title', value='', type='text')
+        form(method='POST' action='submitQuestion')
+            h1(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") Ask a question
+            p(style="margin-left:5%; margin-top:20px; font-size:20px; color:midnightblue")
+                | Question title:
+                br
+                input(name='title', value='', type='text' style="width:90%; color:black")
                 br
                 br 
                 | Question text: 
-                input(name='text', value='', type='text')
+                br
+                textarea(name='text', value='', type='text' style="width:90%; color:black; resize:none" rows=5)
                 br 
                 br 
 
@@ -32,6 +34,10 @@ html
                 select#menu1(name='keywords', size=keywords.length, multiple='', style="margin-left: 50px")
                     for keyword in keywords 
                         option(value=keyword.id) #{keyword.keyword}
+                br
+                br
 
-            button(class='btn btn-primary btn-block' type="submit") Ask
+            div(style="display:flex; justify-content:center; align-items:center; width:100%")
+                button(class='btn btn-primary btn-block' style="width:20%; padding:10px 0px; font-size:18px" type="submit") Ask
+        
         

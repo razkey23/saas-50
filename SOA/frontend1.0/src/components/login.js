@@ -83,7 +83,7 @@ export default class Login extends Component {
               <h2 className="headers">Login</h2>
 
               <div className="form-group">
-                <label className="labels">User:</label>
+                <label className="labels">Username:</label>
                 <input type="text" className="form-control" placeholder="Enter username" onChange={evt => this.updateUsername(evt)}></input>
               </div>
 

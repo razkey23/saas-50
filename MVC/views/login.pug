@@ -12,17 +12,12 @@ html
                     li.col-md-2 My Page
         div(class='auth-wrapper')
             form(class='auth-inner' method='POST' action='/auth/signin')
-                h3 Login Form
-                br
-                p 
-                    | username: 
-                    input(name='username', value='', type='text')
-                    br
-                    br
-                    br
-                    | password: 
-                    input(name='password', value='', type='password')
-                    br
-                    br
-                    
-                button(class='btn btn-primary btn-block' type='submit' value="Login") Login
+                h2(class="headers") Login 
+                div(class="form-group")
+                    label(class="labels") Username:
+                    input(name="username", value='', type='text', class="form-control")
+                    label(class="labels") Password:
+                    input(name="password", value='', type='password', class="form-control")
+                
+                div(style="display:flex; justify-content:center; align-items:center; width:100%")
+                    button(class='btn btn-primary btn-block' style="width:200px; padding:10px 0px; font-size:18px" type="submit" value="Login") Login 

@@ -14,26 +14,37 @@ html
                     li.col-md-2.col-md-offset-1 Logout
                 a(href='http://localhost:3000/api/signup')
                     li.col-md-2 Register
-
-        h2(style="margin-left:5%; margin-top:50px; margin-bottom:10px") Questions of the last week
-        table(style="width: 90%; margin-left:5%; border='1'")
-            tr
-                th Question title 
-                th Question text 
-                th Question date
-            for question in questionsW
-                tr 
-                    th #{question.title}
-                    th #{question.text} 
-                    th #{question.date_asked}
-        h2(style="margin-left:5%;margin-top:50px; margin-bottom:10px") Questions of Last Month
-        table(style="width: 90%; margin-left:5%; border='1'")
+        h2(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") Questions of the last week
+        table(style="width: 90%; margin-left:5%")
             tr 
-                th Question title 
-                th Question text 
-                th Question date
-            for question in questionsM
-                tr 
-                    th #{question.title}
-                    th #{question.text} 
-                    th #{question.date_asked}
+                th(class="table-headers") Question title  
+                th(class="table-headers") Question text 
+                th(class="table-headers") Question date  
+            for question in questionW 
+                if (i % 2)
+                    tr(style="background-color:LightCyan")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{question.text}
+                        th(class="table-content") #{answer.date_asked}
+                else
+                    tr(style="background-color:beige")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{answer.text}
+                        th(class="table-content") #{answer.date_answered}
+        h2(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") Questions of Last Month
+        table(style="width: 90%; margin-left:5%")
+            tr 
+                th(class="table-headers") Question title  
+                th(class="table-headers") Question text 
+                th(class="table-headers") Question date  
+            for question in questionM 
+                if (i % 2)
+                    tr(style="background-color:LightCyan")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{question.text}
+                        th(class="table-content") #{answer.date_asked}
+                else
+                    tr(style="background-color:beige")
+                        th(class="table-content") #{question.title}
+                        th(class="table-content") #{answer.text}
+                        th(class="table-content") #{answer.date_answered}

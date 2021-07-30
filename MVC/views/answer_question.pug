@@ -14,22 +14,27 @@ html
                     li.col-md-2.col-md-offset-1 Logout
                 a(href='http://localhost:3000/api/signup')
                     li.col-md-2 Register
-        form(class='ask-me' method='POST' action='AddAnswerOfQuestion' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 700px")
-            p(style="margin-left: 50px") Available Answers
-            table(style="width: 90%; margin-left:50px border='1'")
-            tr 
-                th Answer text 
-                th Answer date 
-            for answer in answers.result
-                tr
-                    th #{answer.text}
-                    th #{answer.date_answered}
-            p(style="margin-left: 50px") Related Keywords
-            p(style="margin-left: 50px") #{keywords}
-            
-            p(style="margin-left: 50px") Your answer here
-            input(name='text', value='', type='text', style="margin-left: 50px")
+        form(method='POST' action='AddAnswerOfQuestion' )
+            h1(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") Available Answers
+            table(style="width: 90%; margin-left:5%")
+                tr 
+                    th(class="table-headers") Answer text 
+                    th(class="table-headers") Answer date 
+                for answer, i in answers.result
+                    if (i % 2)
+                        tr(style="background-color:LightCyan")
+                            th(class="table-content") #{answer.text}
+                            th(class="table-content") #{answer.date_answered}
+                    else
+                        tr(style="background-color:beige")
+                            th(class="table-content") #{answer.text}
+                            th(class="table-content") #{answer.date_answered}
+            h3(style="margin-top:30px; margin-left: 50px;font-weight:600; color:midnightblue") Related Keywords
+            p(style="margin-top:10px; margin-left: 5%") #{keywords}
+
+            h3(style="margin-top:30px; margin-left: 50px;font-weight:600; color:midnightblue") Your answer here
+            textarea(name='text', value='', style="margin-left: 5%; width:90%; resize:none" rows=5)
             br 
             br
-            button(class='btn btn-primary btn-block' type="submit") Answer 
-        
+            div(style="display:flex; justify-content:center; align-items:center; width:100%")
+                button(class='btn btn-primary btn-block' style="width:20%; padding:10px 0px; font-size:18px" type="submit") Answer

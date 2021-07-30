@@ -13,23 +13,20 @@ html
                     li.col-md-2.col-md-offset-1 Logout
                 a(href='http://localhost:3000/api/myPage')
                     li.col-md-2 My Page
-        h2(style="margin-left: 500px") Welcome to askmeanything
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/QuestionsPerKW' style="color: black;") Questions per Keyword
-
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/QuestionsPerPeriod' style="color: black;") Questions Per Period
-
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/AskQuestion' style="color: black;") Ask new question
-
-        .card(class='home-box')
-            .card-block
-            a.card-actions(class='button' href='http://localhost:3000/api/AnswerQuestion' style="color: black;") Answer a question
-
+        h1(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") Welcome to askmeanything
+        div(class="home-pages")
+            div(class='home-box' style="background-color: cornsilk")
+                a( href='http://localhost:3000/api/QuestionsPerKW' style="color: black;") Questions per Keyword
+                
+            div(class='home-box' style="background-color: lightcyan")
+                a(href='http://localhost:3000/api/QuestionsPerPeriod' style="color: black;") Questions Per Period
+                
+            div(class='home-box' style="background-color: palegreen")
+                a(href='http://localhost:3000/api/AskQuestion' style="color: black;") Ask new question
+                
+            div(class='home-box' style="background-color: lavender")
+                a( href='http://localhost:3000/api/AnswerQuestion' style="color: black;") Answer a question
+            
         .div(class='footer')
             a(href="/")  about
             a(href="/")  contact us

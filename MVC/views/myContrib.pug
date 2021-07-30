@@ -4,16 +4,16 @@ html
     body
         div.container
             ul.col-md-12.row
-                a(href="#")
-                    li.col-md-2.col-md-offset-1 Home Page
-                a(href="#")
-                    li.col-md-2 Register
-                a(href="#")
-                    li.col-md-2 Login
-                a(href="#")
-                    li.col-md-2.col-md-offset-1 Logout
-                a(href="#")
+                a(href='http://localhost:3000/api/landing_page')
+                    li.col-md-2 HomePage
+                a(href='http://localhost:3000/api/myPage')
                     li.col-md-2 My Page
+                a(href="http://localhost:3000/api/login")
+                    li.col-md-2 Login
+                a(href='http://localhost:3000/api/logout')
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href='http://localhost:3000/api/signup')
+                    li.col-md-2 Register
         table(style="width: 100%; border='1'")
             tr 
                 th Question title 
@@ -30,4 +30,4 @@ html
             for answer in answers 
                 tr 
                     th #{answer.text} 
-                    th #{answer.date}
+                    th #{answer.date_answered}

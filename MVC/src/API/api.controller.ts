@@ -152,8 +152,7 @@ export class APIController {
             //res.redirect('landing_page');
         }
         else {
-            res.redirect('AskQuestion');
-            //res.redirect('login');
+            res.redirect('login');
         }
         //Extract
     }
@@ -165,6 +164,28 @@ export class APIController {
         return {message:req.cookies.message};
     }
 
+    @Get('logout')
+    @Render('landing_page')
+    logout(@Req() req,@Res() res) {
+        for (let i in req.cookies) {
+            res.clearCookie(i);
+        }
+    }
+
+    @Get('myPage')
+    @Render('my_page')
+    myPage(@Req() req,@Res() res) {
+        return {status:"OK"};
+    }
+
+    @Get('signup')
+    @Render('signup')
+    signup(@Req() req,@Res() res) {
+        for (let i in req.cookies) {
+            res.clearCookie(i);
+        }
+        return {status:"OK"};
+    }
 
     @Get('/landing_page')
     @Render('landing_page')
@@ -173,9 +194,30 @@ export class APIController {
         return {status:"200"};
     }
 
-    @Get('/MyContribution')
+    @Get('myContributions')
     @Render('myContrib')
-    //@UseGuards(JwtAuthGuard)
+    async myContributions(@Req() req , @Res() res) {
+        if (req.cookies.loggedIn) {
+            req.body.user=req.cookies.userId;
+            let result= await this.answersOfUser(req);
+            //let questions = await this.questionsPerUser(req);
+            let answers = result.answers;
+            let questions = result.questions;
+            return {
+                answers:answers,
+                questions:questions
+            }
+        }
+        else {
+            res.redirect('login')
+            //return({status:"OK"});
+            //alert("Something went wrong");
+            //res.redirect('landing_page');
+        }
+    }
+
+
+    //@Get('/MyContribution')
     async answersOfUser(@Req() req:Request){
         let answers = await this.answerService.findAll();
         if (!req.body.user) {
@@ -192,8 +234,6 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-
-
         let questions = await this.questionService.findAll();
         let temp2=[]
         for (let x in questions) {
@@ -267,7 +307,6 @@ export class APIController {
                     //res.redirect('landing_page');
                     res.clearCookie('questionId');
                     res.redirect('landing_page');
-
                 });
         }
         else {

@@ -15,37 +15,25 @@ export class AuthController {
         private readonly userService : UserService,
         private httpService: HttpService) {}
 
-    @Get()
-    @Render('login')
-    login1() {
-        return {status:"200"};
-    }
 
-    @Get()
-    async findAll() {
-        const val = await this.authService.validate("testuser","testuser");
-        return val;
-    }
 
     //Protected endpoint ,returns a json token
     @UseGuards(LocalAuthGuard)
     @Post('signin')
     async login( @Req() req,@Res() res)  {
-        res.clearCookie('session');
-        res.clearCookie('loggeIn');
-        res.clearCookie('loggedIn');
-        res.clearCookie('userId');
-
+        for (let i in req.cookies) {
+            res.clearCookie(i);
+        }
         const result =this.authService.login(req.user as User);
+        res.setHeader('Authorization','Bearer '+result.token);
         res.cookie('loggedIn','true');
         res.cookie('password',req.user.password);
         res.cookie('userId',req.user.id);
         res.redirect('/api/landing_page');
     }
 
-    //Unprotected endpoint (register works)
-    @Post('register')
-    async register(@Req() req ) : Promise <{ message:string}> {
+    @Post('signup')
+    async signup(@Req() req,@Res() res) {
         const saltOrRounds = 10;
         if (!req.body.password || !req.body.username || ! req.body.password2){
             return { message : "No password Given or Username Given"};
@@ -69,9 +57,9 @@ export class AuthController {
                     },
                 })
                 .toPromise()
-                .then( res =>  {
-                        return {"message":"Ok"};
-
+                .then( result =>  {
+                    res.redirect('/api/landing_page');
+                    return {"message":"Ok"};
                 })
                 .catch(err => {
                     console.log("Error Occured");
@@ -80,10 +68,8 @@ export class AuthController {
 
             console.log(x);
             return x;
-            /*const x = await this.httpService.post('http://localhost:3000/user' ,
-                "username:
-                ");*/
-            //console.log(x);
+
         }
     }
+
 }

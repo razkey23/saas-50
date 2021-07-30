@@ -8,16 +8,15 @@ export default class Login extends Component {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-                    <div className="container">
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
                     
                         { localStorage.getItem("token") === null ? (
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/login"}>Login</Link>
+                                <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/signup"}>SignUp</Link>
+                                <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                             </li>
                         </ul>
                         ) : (
@@ -36,30 +35,29 @@ export default class Login extends Component {
                         }
                         
                     </div>
-                    </div>
                 </nav>
 
                 <div class="ask-me"><h2>Welcome to AskMeAnything</h2></div>
                 <div className="home-pages">  
                     <Link to="/questionsPerKeyword" >
-                        <div className='home-box'>Questions per keyword</div>
+                        <div className='home-box' style={{backgroundColor: "cornsilk" }}>Questions per keyword</div>
                     </Link>
                     <Link to = "/questionsPerDay" >
-                        <div className='home-box'> Questions per period</div>
+                        <div className='home-box' style={{backgroundColor: "lightcyan"}}> Questions per period</div>
                     </Link>
                     <Link to = "/ask" >
-                        <div className='home-box'> Ask new question</div>
+                        <div className='home-box' style={{backgroundColor: "palegreen"}}> Ask new question</div>
                     </Link>
                     <Link to = "/answer" >
-                        <div className='home-box'> Answer a question</div>
+                        <div className='home-box' style={{backgroundColor: "lavender"}}> Answer a question</div>
                     </Link>
                 </div>
                 <div className="footer">
-                    <p>about</p>
-                    <p>contact us</p>
-                    <p>project documentation</p>
-                    <p>link on github</p>
-                    <p>cource materials</p>
+                    <a href="/">about</a>
+                    <a href="mailto:el16155@mail.ntua.gr; el16049@mail.ntua.gr">contact us</a>
+                    <a href="/">project documentation</a>
+                    <a href="https://github.com/razkey23/saas-50">link on github</a>
+                    <a href="https://courses.pclab.ece.ntua.gr/course/view.php?id=34">cource materials</a>
                 </div>
             </div>
         

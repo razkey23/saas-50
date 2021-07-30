@@ -51,8 +51,7 @@ export default class Login extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
             
               { localStorage["token"] ? (
                 <ul className="navbar-nav ml-auto">
@@ -69,34 +68,43 @@ export default class Login extends Component {
                   <Link className="nav-link" to={"/homepage"}>Home Page</Link>
                   </li>
                   <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                  <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                   </li>
                 </ul>
                 )
               }
               
-            </div>
           </div>
         </nav>
 
         <div className="auth-wrapper">
           <div className="auth-inner">
               <form>
-              <h2>Login</h2>
+              <h2 className="headers">Login</h2>
 
               <div className="form-group">
-                <label>User:</label>
+                <label className="labels">User:</label>
                 <input type="text" className="form-control" placeholder="Enter username" onChange={evt => this.updateUsername(evt)}></input>
               </div>
 
               <div className="form-group">
-                <label>Password:</label>
+                <label className="labels">Password:</label>
                 <input type="password" className="form-control" placeholder="Enter password" onChange={evt => this.updatePassword(evt)}></input>
               </div>
-
-            <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block" style={{marginTop:1+'em'}}>Login</button>
+              <div style={{width:100+"%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block button-forms">
+                  <div className="button-text">Login</div>
+                </button>
+              </div>
             </form>
           </div>
+        </div>
+        <div className="footer">
+          <a href="/">about</a>
+          <a href="/">contact us</a>
+          <a href="/">project documentation</a>
+          <a href="/">link on github</a>
+          <a href="/">cource materials</a>
         </div>
       </div>
     );

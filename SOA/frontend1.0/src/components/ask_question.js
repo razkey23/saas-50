@@ -66,18 +66,12 @@ export default class Ask extends Component {
             keywords: evt
         })
     }
-
-    routeChange() {
-        let path = `/mypage`;
-        this.props.history.push(path);
-    }
     
     render() {
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-                    <div className="container">
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
                     
                         { localStorage.getItem("token") === null ? (
                         <ul className="navbar-nav ml-auto">
@@ -88,7 +82,7 @@ export default class Ask extends Component {
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                            <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                             </li>
                         </ul>
                         ) : (
@@ -107,22 +101,21 @@ export default class Ask extends Component {
                         }
                         
                     </div>
-                    </div>
                 </nav>
                 <div className="verical-orientation">
-                    <div class="ask-me" style={{paddingLeft:5+"%", paddingBottom:2+"em"}}>Ask a question</div>
+                    <div class="ask-me" style={{paddingLeft:5+"%", paddingBottom:10+"px"}}>Ask a question</div>
                     <div className="horizontal-orientation">
-                        <label style={{width:20+'%'}}>Question title:</label>
-                        <input type="text" className="form-control" onChange={evt => this.updateTitle(evt)}></input>
+                        <label style={{width:20+'%', fontWeight:700}}>Question title:</label>
+                        <input type="text" className="form-control" placeholder="The title of your question" onChange={evt => this.updateTitle(evt)}></input>
                     </div>
 
                     <div className="horizontal-orientation">
-                        <label style={{width:20+'%'}}>Question text:</label>
-                        <textarea className="form-control" rows="5" style={{resize:"none"}} onChange={evt => this.updateText(evt)}></textarea>
+                        <label style={{width:20+'%', fontWeight:700}}>Question text:</label>
+                        <textarea className="form-control" rows="5" placeholder="Elaborate your question" style={{resize:"none"}} onChange={evt => this.updateText(evt)}></textarea>
                     </div>
                     
                     <div style={{paddingLeft:5+"%", width:95+"%", marginBottom:50+"px"}}>
-                        <label style={{width:20+'%', marginBottom:10+"px"}}>Select Keywords:</label>
+                        <label style={{width:20+'%', fontWeight:700, marginBottom:10+"px"}}>Select Keywords:</label>
                         <Select
                             class="form-control"
                             placeholder="Select Keyword"
@@ -133,11 +126,21 @@ export default class Ask extends Component {
                             onChange={e => this.updateKeywords(e)}
                         />
                     </div>
-                    
-                    <div className="buttons" style={{marginLeft:"20%"}}>
-                        <button style={{width:40+"%"}} onClick={() => this.sumbitQuestion()}>Submit</button>
-                        <button style={{width:40+"%"}} onClick={() => this.routeChange()}>Cancel</button>
+                    <div style={{width:100+"%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.sumbitQuestion()} style={{marginRight:1+"em", marginLeft:10+"px"}}>
+                            <div style={{fontSize: 18+"px",fontWeight: 600}}>Submit</div>
+                        </button>
+                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.props.history.push("/homepage")} style={{marginLeft:1+"em", marginRight:10+"px"}}>
+                        <div style={{fontSize: 18+"px",fontWeight: 600}}>Cancel</div>
+                        </button>
                     </div>
+                </div>
+                <div className="footer">
+                    <a href="/">about</a>
+                    <a href="/">contact us</a>
+                    <a href="/">project documentation</a>
+                    <a href="/">link on github</a>
+                    <a href="/">cource materials</a>
                 </div>
             </div>
         

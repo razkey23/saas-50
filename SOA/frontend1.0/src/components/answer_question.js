@@ -19,11 +19,6 @@ export default class Answer extends Component {
         }
     }
 
-    routeChange() {
-        let path = `/mypage`;
-        this.props.history.push(path);
-    }
-
     componentDidMount(){
         // fetch questions from database get all questions
     }
@@ -80,14 +75,19 @@ export default class Answer extends Component {
 
     render() {
         var columns = [
-            { dataField: 'id', text: 'Id' },
-            { dataField: 'text', text: 'Answer' },
+            { dataField: 'id', text: 'Id', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
+            { dataField: 'text', text: 'Answer', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
           ]
+        const rowStyle = (row, rowIndex) => {
+            const style = {};
+            if (rowIndex%2) style.backgroundColor="LightCyan"
+            else style.backgroundColor="beige"
+            return style;
+        };
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-                    <div className="container">
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
                     
                         { localStorage.getItem("token") === null ? (
                         <ul className="navbar-nav ml-auto">
@@ -98,7 +98,7 @@ export default class Answer extends Component {
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                            <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                             </li>
                         </ul>
                         ) : (
@@ -114,12 +114,10 @@ export default class Answer extends Component {
                             </li>
                         </ul>
                         )
-                        }
-                        
-                    </div>
+                        }                        
                     </div>
                 </nav> 
-                <div className="verical-orientation text-align-right"  style={{width:90+"%",marginLeft:5+"%"}}>
+                <div className="verical-orientation text-align-right"  style={{width:90+"%",marginLeft:5+"%", paddingBottom:50+"px"}}>
                     <div class="ask-me" style={{paddingLeft:0, paddingBottom:2+"em"}}>Answer a question</div>
                     {/* make it be a select from all the questions */}
                     <Select
@@ -130,31 +128,44 @@ export default class Answer extends Component {
                         getOptionValue={(option)=>option.id}
                         onChange={e => this.getQuestion(e)}
                     />
-                    <div style={{height:1+"em"}}></div>
+                    <div style={{height:1+"em"}}/>
                     <input readOnly type="text" className="form-control" placeholder="(kewywords,read-only)" value={this.state.keywords}></input>
-                    <div style={{height:1+"em"}}></div>
-                    {/* make it be a select from all the questions */}
-                    <div className="form-group " style={{height:300+"px"}}>
-                        <label style={{width:20+'%'}}>Available Answers:</label>
+                    <div style={{height:1+"em"}}/>
+                    <h2 style={{paddingTop:10+"px", paddingBottom:10+"px", fontSize:20+"px"}}>Available Answers:</h2>
+                    <div className="form-group " style={{height:300+"px", overflowY:"scroll"}}>
+                    
                         <div style={{marginTop:10+"px"}}>
                             <BootstrapTable
                                 data={ this.state.answers }
                                 columns={ columns }
+                                rowStyle={rowStyle}
+                                wrapperClasses="table-responsive"
+                                rowClasses="text-wrap"
                                 keyField='id'>
                             </BootstrapTable>
                         </div>
                     </div>
-                    
 
                     <div className="form-group">
                         <label style={{width:20+'%'}}>Your Answer:</label>
-                        <textarea className="form-control" rows="5" onChange={e => this.getAnswer(e)}></textarea>
+                        <textarea className="form-control" style={{resize:"none"}} rows="5" onChange={e => this.getAnswer(e)}></textarea>
                     </div>
-                    
-                    <div className="buttons">
-                        <button style={{width:40+"%"}} onClick={() => this.submitAnswer()}>Submit answer</button>
-                        <button style={{width:40+"%"}} onClick={() => this.routeChange()}>Never mind</button>
+
+                    <div style={{width:100+"%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.sumbitQuestion()} style={{marginRight:1+"em", marginLeft:10+"px"}}>
+                            <div style={{fontSize: 18+"px",fontWeight: 600}}>Submit answer</div>
+                        </button>
+                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.props.history.push("/homepage")} style={{marginLeft:1+"em", marginRight:10+"px"}}>
+                        <div style={{fontSize: 18+"px",fontWeight: 600}}>Never Mind</div>
+                        </button>
                     </div>
+                </div>
+                <div className="footer">
+                    <a href="/">about</a>
+                    <a href="/">contact us</a>
+                    <a href="/">project documentation</a>
+                    <a href="/">link on github</a>
+                    <a href="/">cource materials</a>
                 </div>
             </div>
         );

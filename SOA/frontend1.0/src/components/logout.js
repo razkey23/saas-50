@@ -14,8 +14,7 @@ export default class Logout extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
             
               { localStorage["token"] === null ? (
               <ul className="navbar-nav ml-auto">
@@ -26,7 +25,7 @@ export default class Logout extends Component {
                   <Link className="nav-link" to={"/login"}>Login</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                  <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                 </li>
               </ul>
               ) : (
@@ -42,7 +41,6 @@ export default class Logout extends Component {
                 )
               }
               
-            </div>
           </div>
         </nav>
 
@@ -54,6 +52,13 @@ export default class Logout extends Component {
             <button type="submit" onClick={() => this.logout()} className="btn btn-primary btn-block">Logout</button>
             </form>
           </div>
+        </div>
+        <div className="footer">
+          <a href="/">about</a>
+          <a href="/">contact us</a>
+          <a href="/">project documentation</a>
+          <a href="/">link on github</a>
+          <a href="/">cource materials</a>
         </div>
       </div>
     );

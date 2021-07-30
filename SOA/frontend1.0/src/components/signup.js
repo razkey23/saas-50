@@ -59,8 +59,7 @@ export default class SignUp extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
             
               { localStorage["token"] ? (
                 <ul className="navbar-nav ml-auto">
@@ -83,33 +82,45 @@ export default class SignUp extends Component {
                 )
               }
               
-            </div>
           </div>
         </nav>
         <div className="auth-wrapper">
           <div className="auth-inner">
             <form>
-              <h2>Sign Up</h2>
+              <h2 className="headers">Sign Up</h2>
 
               <div className="form-group"  style={{marginTop:1+'em'}}>
-                <label>Email (user name):</label>
+                <label className="labels">Email (user name):</label>
                 <input type="text" className="form-control" placeholder="Enter e-mail or username" onChange={evt => this.updateUsername(evt)}></input>
               </div>
 
               <div className="form-group"  style={{marginTop:1+'em'}}>
-                <label>Password:</label>
+                <label className="labels">Password:</label>
                 <input type="password" className="form-control" placeholder="Enter password" onChange={evt => this.updatePassword(evt)}></input>
               </div>
 
               <div className="form-group"  style={{marginTop:1+'em'}}>
-                <label>Re-enter password:</label>
+                <label className="labels">Re-enter password:</label>
                 <input type="password" className="form-control" placeholder="Re-enter password" onChange={evt => this.updatePasswordAgain(evt)}></input>
               </div>
-
-              <button type="submit" className="btn btn-primary btn-block" onClick={() => this.register} style={{marginTop:1+'em'}}>Sign up</button>
-              <button type="submit" className="btn btn-primary btn-block" onClick={() => this.props.history.push('/')} style={{marginTop:1+'em', marginLeft:3+"em"}}>Cancel</button>
+              <div style={{width:100+"%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.register} style={{marginRight:1+"em", marginLeft:10+"px"}}>
+                  <div className="button-text">Register</div>
+                </button>
+                <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.props.history.push('/')} style={{marginLeft:1+"em", marginRight:10+"px"}}>
+                  <div className="button-text">Cancel</div>
+                </button>
+              </div>
+              
             </form>
           </div>
+        </div>
+        <div className="footer">
+          <a href="/">about</a>
+          <a href="/">contact us</a>
+          <a href="/">project documentation</a>
+          <a href="https://github.com/razkey23/saas-50">link on github</a>
+          <a href="/">cource materials</a>
         </div>
       </div>
       

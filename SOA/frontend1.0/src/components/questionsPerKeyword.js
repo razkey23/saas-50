@@ -24,7 +24,7 @@ export default class QuestionsPerKeyword extends Component {
             questions: []
         }
     }
-
+    
     getQuestion(e){
         axios({
             method: 'POST',
@@ -48,15 +48,32 @@ export default class QuestionsPerKeyword extends Component {
 
     render() {
         var columns = [
-            { dataField: 'id', text: 'Id'},
-            { dataField: 'title', text: 'Title'},
-            { dataField: 'text', text: 'Description'},
+            { 
+                dataField: 'id', 
+                text: 'Id',
+                headerStyle: {backgroundColor: 'MidnightBlue', color:"white"}
+            },
+            { 
+                dataField: 'title', 
+                text: 'Title',
+                headerStyle: {backgroundColor: 'MidnightBlue', color:"white"}
+            },
+            { 
+                dataField: 'text', 
+                text: 'Description',
+                headerStyle: {backgroundColor: 'MidnightBlue', color:"white"}
+            },
         ]
+        const rowStyle = (row, rowIndex) => {
+            const style = {};
+            if (rowIndex%2) style.backgroundColor="LightCyan"
+            else style.backgroundColor="beige"
+            return style;
+        };
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-                    <div className="container">
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div className="collapse navbar-collapse justify-content-end" style={{marginRight: 40+"px"}}>
                     
                         { localStorage.getItem("token") === null ? (
                         <ul className="navbar-nav ml-auto">
@@ -67,7 +84,7 @@ export default class QuestionsPerKeyword extends Component {
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
                             <li className="nav-item">
-                            <Link className="nav-link" to={"/signup"}>SignUp</Link>
+                            <Link className="nav-link" to={"/sign-up"}>Sign Up</Link>
                             </li>
                         </ul>
                         ) : (
@@ -86,9 +103,9 @@ export default class QuestionsPerKeyword extends Component {
                         }
                         
                     </div>
-                    </div>
                 </nav>
-                <div class="ask-me" style={{paddingBottom:2+"em"}}>Questions Per Keyword</div>
+                <div class="ask-me" style={{paddingBottom:50+"px"}}>Questions Per Keyword</div>
+                <h2 style={{paddingLeft:5+"%", paddingBottom:15+"px", color:"MidnightBlue"}}>Select Keyword</h2>
                 <div style={{marginLeft:5+"%", width:90+"%"}}>
                     <Select
                         class="form-control"
@@ -98,21 +115,25 @@ export default class QuestionsPerKeyword extends Component {
                         getOptionValue={(option)=>option.id}
                         onChange={e => this.getQuestion(e)}
                     />
-                    <div style={{marginTop:10+"px"}}>
-                        <BootstrapTable
-                            data={ this.state.questions }
-                            columns={ columns }
-                            keyField='id'>
-                        </BootstrapTable>
+                    <div style={{marginTop:40+"px", height:400+"px", overflowY:"scroll"}}>
+                        <div>
+                            <BootstrapTable
+                                data={ this.state.questions }
+                                columns={ columns }
+                                rowStyle={rowStyle}
+                                wrapperClasses="table-responsive"
+                                rowClasses="text-wrap"
+                                keyField='id'>
+                            </BootstrapTable>
+                        </div>
                     </div>
                 </div>
-
                 <div className="footer">
-                    <p>about</p>
-                    <p>contact us</p>
-                    <p>project documentation</p>
-                    <p>link on github</p>
-                    <p>cource materials</p>
+                    <a href="/">about</a>
+                    <a href="/">contact us</a>
+                    <a href="/">project documentation</a>
+                    <a href="/">link on github</a>
+                    <a href="/">cource materials</a>
                 </div>
             </div>
         );

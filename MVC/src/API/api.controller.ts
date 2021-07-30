@@ -18,14 +18,8 @@ export class APIController {
                 private readonly answerService : AnswerService,
                 private readonly questionService : QuestionService) {}
     //constructor(private readonly userService: UserService) {}
-    @Get()
-    @UseGuards(JwtAuthGuard)
-    findAll(@Req() request:Request): Promise<Keyword[]> {
-        console.log(request);
-        return this.keywordService.findAll();
-    }
 
-
+    // USEFUL
 
 
     @Get('QuestionsPerKW')
@@ -94,7 +88,6 @@ export class APIController {
         let questions = await this.questionService.findAll();
         return {questions:questions};
     }
-
 
 
     @Get('login')
@@ -173,106 +166,13 @@ export class APIController {
     }
 
 
-
     @Get('/landing_page')
     @Render('landing_page')
     login1(@Req() req) {
         console.log(req.cookies);
         return {status:"200"};
     }
-    //Works but returns EVERYTHING ,need to create a custom obj
-    @Get('/QuestionsPerKW')
-    @Render('questions')
-    //@UseGuards(JwtAuthGuard)
-    async questionsPerKW(@Req() req:Request)  {
-        let questions = await this.questionService.findAll();
-        //console.log(questions);
-        let temp=[];
-        for (let x in questions) {
-            if (questions[x].keyword.length>0) { //GET KEYWORD ARRAY OBJECT
-                for (let kw in questions[x].keyword) { //Parse Keyword array of question
-                    if(req.body.keyword) {
-                        if(questions[x].keyword[kw].keyword == req.body.keyword){
-                            temp.push(questions[x]);
-                        }
-                    }
-                    else if(req.body.id){
-                        if(questions[x].keyword[kw].id == req.body.id){
-                            temp.push(questions[x]);
-                        }
-                    }
-                }
-            }
-        }
-        return {"result" : temp};
-        //return { title:'Hello'};
-        //return temp;
-    }
 
-
-
-    //Datefrom in format YEAR-MONTH-DAY -> sample: 2020-06-01 ,undefined behavior otherwise
-    //Returns json object Array of questions
-    @Get('/QuestionsPerDay')
-    //@UseGuards(JwtAuthGuard)
-    async questionsPerDay(@Req() req: Request) {
-        let questions = await this.questionService.findAll();
-        if (!req.body.day && (!req.body.datefrom || !req.body.dateto)) {
-            return {"error":"Bad Parameters in body"};
-        }
-        let datefrom;
-        let dateto ;
-        if (req.body.day) {
-            datefrom=req.body.day;
-            dateto=req.body.day;
-        }
-        else {
-            datefrom=req.body.datefrom;
-            dateto=req.body.dateto;
-        }
-        let temp=[];
-        for(let x in questions) { //PARSE Question JSON
-            console.log(questions[x].date_asked)
-            if (questions[x].date_asked >= datefrom && questions[x].date_asked <= dateto) {
-                console.log(questions[x].date_asked,datefrom,dateto)
-                let customobj={
-                    id : questions[x].id,
-                    text : questions[x].text,
-                    title : questions[x].title,
-                    date_asked : questions[x].date_asked
-                };
-                temp.push(customobj);
-            }
-        }
-        return {"result":temp};
-    }
-
-    //INPUT OF TYPE "question":x x = id
-    @Get('/AnswersOfQuestion')
-    //@UseGuards(JwtAuthGuard)
-    async answersOfQuestions(@Req() req:Request) {
-        let answers = await this.answerService.findAll();
-        if (!req.body.question) {
-            return {"error":"No questions was given"};
-        }
-        let temp=[]
-        for (let x in answers) {
-            if(answers[x].question.id==req.body.question) {
-                let customobj={
-                    id:answers[x].id,
-                    text:answers[x].text,
-                    date_answered:answers[x].date_answered
-                };
-                temp.push(customobj);
-            }
-        }
-        return {"result":temp};
-    }
-
-
-
-
-    //INPUT OF TYPE "User":x ,x=id
     @Get('/MyContribution')
     @Render('myContrib')
     //@UseGuards(JwtAuthGuard)
@@ -292,7 +192,7 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        
+
 
         let questions = await this.questionService.findAll();
         let temp2=[]
@@ -333,6 +233,121 @@ export class APIController {
             keywords:tempKeywords,
             answers:x
         };
+    }
+
+
+    @Post('/AddAnswerOfQuestion')
+    async addAnswerOfQuestion(@Req() req, @Res() res) {
+        let questionId = parseInt(req.cookies.questionId);
+        if (req.cookies.loggedIn) {
+            let user= {
+                id:req.cookies.userId
+            }
+            let today = new Date();
+            let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            let customObj = {
+                user:user,
+                text :req.body.text,
+                date_answered :date,
+                question:{
+                    id:questionId
+                }
+            }
+            console.log(customObj);
+            const object = customObj;
+            let x = await this.answerService.create(object)
+                .then(result=> {
+                    console.log(result);
+                    res.cookie('message','Successful Insertion');
+                    res.clearCookie('questionId');
+                    res.redirect('landing_page');
+                })
+                .catch(err => {
+                    console.log(err.message);
+                    //res.redirect('landing_page');
+                    res.clearCookie('questionId');
+                    res.redirect('landing_page');
+
+                });
+        }
+        else {
+            res.redirect('login');
+            //res.redirect('login');
+        }
+    }
+
+
+
+
+
+
+
+    //USELESS
+
+
+
+
+    @Get()
+    @UseGuards(JwtAuthGuard)
+    findAll(@Req() request:Request): Promise<Keyword[]> {
+        console.log(request);
+        return this.keywordService.findAll();
+    }
+
+
+    @Get('/QuestionsPerDay')
+    //@UseGuards(JwtAuthGuard)
+    async questionsPerDay(@Req() req: Request) {
+        let questions = await this.questionService.findAll();
+        if (!req.body.day && (!req.body.datefrom || !req.body.dateto)) {
+            return {"error":"Bad Parameters in body"};
+        }
+        let datefrom;
+        let dateto ;
+        if (req.body.day) {
+            datefrom=req.body.day;
+            dateto=req.body.day;
+        }
+        else {
+            datefrom=req.body.datefrom;
+            dateto=req.body.dateto;
+        }
+        let temp=[];
+        for(let x in questions) { //PARSE Question JSON
+            console.log(questions[x].date_asked)
+            if (questions[x].date_asked >= datefrom && questions[x].date_asked <= dateto) {
+                console.log(questions[x].date_asked,datefrom,dateto)
+                let customobj={
+                    id : questions[x].id,
+                    text : questions[x].text,
+                    title : questions[x].title,
+                    date_asked : questions[x].date_asked
+                };
+                temp.push(customobj);
+            }
+        }
+        return {"result":temp};
+    }
+
+    @Get('/AnswersOfQuestion')
+    //@UseGuards(JwtAuthGuard)
+    async answersOfQuestions(@Req() req:Request) {
+        let answers = await this.answerService.findAll();
+        if (!req.body.question) {
+            return {"error":"No questions was given"};
+        }
+        let temp=[]
+        for (let x in answers) {
+            if(answers[x].question.id==req.body.question) {
+                let customobj={
+                    id:answers[x].id,
+                    text:answers[x].text,
+                    date_answered:answers[x].date_answered
+                };
+                temp.push(customobj);
+            }
+        }
+        return {"result":temp};
     }
 
 
@@ -389,45 +404,6 @@ export class APIController {
         return {"result":x};
     }
 
-    @Post('/AddAnswerOfQuestion')
-    async addAnswerOfQuestion(@Req() req, @Res() res) {
-        let questionId = parseInt(req.cookies.questionId);
-        if (req.cookies.loggedIn) {
-            let user= {
-                id:req.cookies.userId
-            }
-            let today = new Date();
-            let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            let customObj = {
-                user:user,
-                text :req.body.text,
-                date_answered :date,
-                question:{
-                    id:questionId
-                }
-            }
-            console.log(customObj);
-            const object = customObj;
-            let x = await this.answerService.create(object)
-                .then(result=> {
-                    console.log(result);
-                    res.cookie('message','Successful Insertion');
-                    res.clearCookie('questionId');
-                    res.redirect('landing_page');
-                })
-                .catch(err => {
-                    console.log(err.message);
-                    //res.redirect('landing_page');
-                    res.clearCookie('questionId');
-                    res.redirect('landing_page');
-
-                });
-        }
-        else {
-            res.redirect('login');
-            //res.redirect('login');
-        }
-    }
 
     @Post('/AddAnswer')
     //@UseGuards(JwtAuthGuard)
@@ -454,4 +430,6 @@ export class APIController {
         return {"result":x};
         //redirect to 
     }
+
+
 }

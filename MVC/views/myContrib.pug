@@ -2,12 +2,23 @@ html
     head
         title='My questions - My answers'
     body
-       
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
         table(style="width: 100%; border='1'")
             tr 
                 th Question title 
                 th Question text 
-            for question, i in questions 
+            for question in questions 
                 tr 
                     th #{question.title}
                     th #{question.text} 
@@ -16,7 +27,7 @@ html
             tr 
                 th Answer text 
                 th Answer date 
-            for answer, i in answers 
+            for answer in answers 
                 tr 
                     th #{answer.text} 
                     th #{answer.date}

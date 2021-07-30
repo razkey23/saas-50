@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as cookieParser from 'cookie-parser';
 import "reflect-metadata";
 import {NestExpressApplication} from "@nestjs/platform-express";
 
@@ -12,6 +13,7 @@ async function bootstrap() {
     AppModule,
   );
 
+  app.use(cookieParser());
   app.useStaticAssets(join(__dirname,'..','public'));
   app.setBaseViewsDir(join(__dirname,'..','views'));
   app.setViewEngine('pug');

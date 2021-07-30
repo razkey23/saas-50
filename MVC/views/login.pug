@@ -2,6 +2,16 @@ html
     head 
         title Login
     body
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
         div(class='auth-wrapper')
             form(class='auth-inner' method='POST' action='/auth/signin')
                 h3 Login Form

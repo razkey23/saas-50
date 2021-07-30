@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import axios from 'axios'
+import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-const baseUrl = 'http://localhost:8000'
 export default class Login extends Component {
   constructor(props){
     super(props);
@@ -28,27 +26,24 @@ export default class Login extends Component {
   }
   
   login(){
-    localStorage.setItem("token", 1);
-    alert(localStorage.getItem("token"));
-    this.props.history.push('/mypage')
-    // axios({
-    //   method: 'POST',
-    //   url: `http://localhost:3001/proxy`,
-    //   body: {
-    //     "endpoint": "signin",
-    //     "username": this.state.username,
-    //     "password": this.state.password,
-    //     "method": "POST"
-    //   },
-    //   Headers:{
-    //     "Authorization": "Bearer Token"
-    //   }
-    // }).then(function(response) {
-    //   localStorage.setItem('token', response);
-    //   this.props.history.push('/mypage');
-    // }).catch(function(error) {
-    //   alert(error)
-    // })
+    axios({
+      method: 'POST',
+      url: `http://localhost:3001/proxy`,
+      body: {
+        "endpoint": "signin",
+        "username": this.state.username,
+        "password": this.state.password,
+        "method": "POST"
+      },
+      Headers:{
+        "Authorization": "Bearer Token"
+      }
+    }).then(function(response) {
+      localStorage.setItem('token', response);
+      this.props.history.push('/mypage');
+    }).catch(function(error) {
+      alert(error)
+    })
   }
 
   
@@ -74,7 +69,7 @@ export default class Login extends Component {
                   <Link className="nav-link" to={"/homepage"}>Home Page</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to={"/login"}>Login</Link>
+                  <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
                   </li>
                 </ul>
                 )
@@ -99,7 +94,7 @@ export default class Login extends Component {
                 <input type="password" className="form-control" placeholder="Enter password" onChange={evt => this.updatePassword(evt)}></input>
               </div>
 
-            <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block">Login</button>
+            <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block" style={{marginTop:1+'em'}}>Login</button>
             </form>
           </div>
         </div>

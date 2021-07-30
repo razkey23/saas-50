@@ -3,22 +3,32 @@ html
         title="Landing Page"
         link(rel='stylesheet' href='/css/style.css')
     body 
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
         h2(style="margin-left: 500px") My.AskMeAnything
         .card(class='home-box')
             .card-block
-            a.card-actions(class='button' href='http://localhost:3006/' style="color: black;") My questions #[br] My answers
+            a.card-actions(class='button' href='http://localhost:3000/api/MyContribution' style="color: black;") My questions #[br] My answers
 
         .card(class='home-box')
             .card-block
-            a.card-actions(class='button' href='http://localhost:3006' style="color: black;") My contributins per day
+            a.card-actions(class='button' href='http://localhost:3000/api/MyContribution' style="color: black;") My contributins per day
         
         .card(class='home-box')
             .card-block
-            a.card-actions(class='button' href='http://localhost:3006' style="color: black;") ask new question
+            a.card-actions(class='button' href='http://localhost:3000/' style="color: black;") Ask new question
         
         .card(class='home-box')
             .card-block
-            a.card-actions(class='button' href='http://localhost:3006' style="color: black;") answer a question
+            a.card-actions(class='button' href='http://localhost:3000/' style="color: black;") Answer a question
         
         .div(class='footer')
             a(href="/")  about

@@ -1,9 +1,21 @@
 html 
     head 
         title Ask a question page
+
     body 
-        
-        form(class='ask-me' method='POST' action='....' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 400px")
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
+        form(class='ask-me' method='POST' action='submitQuestion' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 400px")
             h3 Ask a question
             p 
                 | Question title: 
@@ -19,7 +31,7 @@ html
                 br 
                 select#menu1(name='keywords', size=keywords.length, multiple='', style="margin-left: 50px")
                     for keyword in keywords 
-                        option(value=keyword.id) #{keyword.text}
+                        option(value=keyword.id) #{keyword.keyword}
 
-            button(class='btn btn-primary btn-block' type="submit") Answer 
+            button(class='btn btn-primary btn-block' type="submit") Ask
         

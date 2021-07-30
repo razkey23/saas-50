@@ -40,7 +40,7 @@ export class AuthService {
         }
     }
 
-    login(user : User) : { token:string } {
+    login(user : User)  {
         const payload = {
             id : user.id,
             username : user.username

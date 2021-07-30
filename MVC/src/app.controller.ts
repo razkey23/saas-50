@@ -20,6 +20,14 @@ export class AppController {
   }
 
 
+  @Get('QuestionsPerKW')
+  @Render('questions_keywords')
+  QuestionsPerKW() {
+
+    return {status:"200"};
+  }
+
+
 
   /*@Get()
   @Render('questions')

@@ -1,62 +1,73 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BootstrapTable from "react-bootstrap-table-next";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import jwt from 'jwt-decode'
 
 
-export default class QuestionsPerDay extends Component {
+export default class ContribUser extends Component {
 
     constructor(){
         super()
         this.state={
-            startDate:'',
-            endDate:'',
-            questions: []
+            questions: [],
+            answers: []
         }
-        this.handleApply = this.handleApply.bind(this)
     }
 
-    handleApply(event, picker) {
-        var d1 = new Date(picker.startDate), d2 = new Date(picker.endDate);
-        this.setState({
-            startDate: [d1.getFullYear(), ('0'+(d1.getMonth()+1)).slice(-2), ('0'+(d1.getDate())).slice(-2)].join('-'),
-            endDate: [d2.getFullYear(), ('0'+(d2.getMonth()+1)).slice(-2), ('0'+(d2.getDate())).slice(-2)].join('-')
-        });
+    componentDidMount(){
+        const userId = jwt(localStorage.getItem("token")).id;
         axios({
           method: 'POST',
           url: `http://localhost:3001/proxy`,
           body: {
-            "endpoint": "QuestionsPerDay",
-            "datefrom": this.state.startDate,
-            "dateto": this.state.endDate,
+            "endpoint": "AnswersOfUser",
+            "user": userId,
             "method": "GET"
           },
           Headers:{
-            "Authorization": "Bearer Token"
+            "Authorization": "Bearer "+localStorage.getItem("token")
           }
         }).then(function(response) {
             this.setState({
-            questions: response
-        })
+                answers: response
+            })
         }).catch(function(error) {
           alert(error)
         })
-        this.setState({
-            questions: [{ id: 1, name: 'George', animal: 'Monkey', temp: 1},
-            { id: 2, name: 'Jeffrey', animal: 'Giraffe' },
-            { id: 3, name: 'Alice', animal: 'Giraffe' }]
-        })
+        // TODO: this need to be created
+        axios({
+            method: 'POST',
+            url: `http://localhost:3001/proxy`,
+            body: {
+              "endpoint": "QuestionsOfUser",
+              "user": userId,
+              "method": "GET"
+            },
+            Headers:{
+              "Authorization": "Bearer "+localStorage.getItem("token")
+            }
+          }).then(function(response) {
+              this.setState({
+                  answers: response
+              })
+          }).catch(function(error) {
+            alert(error)
+          })  
     }
     render() {
         //these to be changed to the fields we want to show
-        var columns = [
+        var columnsQ = [
             { dataField: 'id', text: 'Id' },
-            { dataField: 'name', text: 'Name' },
-            { dataField: 'animal', text: 'Animal' },
+            { dataField: 'title', text: 'Title' },
+            { dataField: 'text', text: 'Text' },
           ]
+        var columnsA = [
+            { dataField: 'id', text: 'Id' },
+            { dataField: 'text', text: 'text' },
+        ]
         
         return (
             <div>
@@ -93,17 +104,19 @@ export default class QuestionsPerDay extends Component {
                     </div>
                     </div>
                 </nav>
-                <div style={{marginTop:50+"px", marginLeft:50+"px"}}>
-                <h2>Select Date</h2>
-                <DateRangePicker onApply={this.handleApply}>
-                    <input />
-                </DateRangePicker>
-                </div>
-                <h2 style={{marginTop:50+"px", marginLeft:50+"px"}}>Questions in the selected date range</h2>
+                <h2 style={{marginTop:50+"px", marginLeft:50+"px"}}>Your questions:</h2>
                 <div style={{marginTop:50+"px", marginLeft:50+"px", marginRight:50+"px"}}>
                     <BootstrapTable
                         data={ this.state.questions }
-                        columns={ columns }
+                        columns={ columnsQ }
+                        keyField='id'>
+                    </BootstrapTable>
+                </div>
+                <h2 style={{marginTop:50+"px", marginLeft:50+"px"}}>Your answers:</h2>
+                <div style={{marginTop:50+"px", marginLeft:50+"px", marginRight:50+"px"}}>
+                    <BootstrapTable
+                        data={ this.state.answers }
+                        columns={ columnsA }
                         keyField='id'>
                     </BootstrapTable>
                 </div>

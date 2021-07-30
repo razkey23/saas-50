@@ -1,24 +1,37 @@
 html 
     head
         title='My questions - My answers'
+    
     body
-       
-        table(style="width: 100%; border='1'")
-            tr 
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
+        h2(style="margin-left:5%; margin-top:50px; margin-bottom:10px") My Questions 
+        table(style="width: 90%; margin-left:5%; border='1'")
+            tr
                 th Question title 
                 th Question text 
                 th Question date
-            for question, i in questions 
+            for question in questions 
                 tr 
                     th #{question.title}
                     th #{question.text} 
                     th #{answer.date}
-        
-        table(style="width: 100%; border='1'")
+        h2(style="margin-left:5%;margin-top:50px; margin-bottom:10px") My Answers 
+        table(style="width: 90%; margin-left:5%; border='1'")
             tr 
                 th Answer text 
-                th Answer date 
-            for answer, i in answers 
+                th Answer date
+            for answer in answers 
                 tr 
                     th #{answer.text} 
                     th #{answer.date}

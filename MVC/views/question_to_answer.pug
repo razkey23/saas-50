@@ -1,0 +1,25 @@
+html 
+    head 
+        title What question to answer?
+    body 
+        div.container
+            ul.col-md-12.row
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Home Page
+                a(href="#")
+                    li.col-md-2 Register
+                a(href="#")
+                    li.col-md-2 Login
+                a(href="#")
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href="#")
+                    li.col-md-2 My Page
+        form(class='ask-me' method='POST' action='QuestionToAnswer' style="height: 500px; margin-left: 600px; margin-top: 150px; background: green; margin-bot: 300px; width: 700px")
+            p(style="margin-left: 50px") Select question
+            select#menu1(name='question', size=1, style="margin-left: 50px")
+                for question in questions 
+                    option(value=question.id) #{question.title} - #{question.text}
+            br 
+            br 
+            button(class='btn btn-primary btn-block' type="submit") Select this question 
+        

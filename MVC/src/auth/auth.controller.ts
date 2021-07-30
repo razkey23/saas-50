@@ -1,5 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Render} from '@nestjs/common';
-import {Request} from 'express';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Render, Request, Res} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import {AuthService} from "./auth.service";
 import {LocalAuthGuard} from "./guards/local-auth.guard";
@@ -7,6 +6,7 @@ import {User} from "../Entities/user/entities/user.entity";
 import {UserService} from "../Entities/user/user.service";
 import {HttpService} from "@nestjs/axios";
 import {map} from "rxjs/operators";
+import {ExtractJwt} from "passport-jwt";
 
 @Controller('auth')
 export class AuthController {
@@ -30,15 +30,22 @@ export class AuthController {
     //Protected endpoint ,returns a json token
     @UseGuards(LocalAuthGuard)
     @Post('signin')
-    login(@Req() req : Request) : {token:string} {
-        console.log("GOT HERE");
-        console.log(req.body)
-        return this.authService.login(req.user as User);
+    async login( @Req() req,@Res() res)  {
+        res.clearCookie('session');
+        res.clearCookie('loggeIn');
+        res.clearCookie('loggedIn');
+        res.clearCookie('userId');
+
+        const result =this.authService.login(req.user as User);
+        res.cookie('loggedIn','true');
+        res.cookie('password',req.user.password);
+        res.cookie('userId',req.user.id);
+        res.redirect('/api/landing_page');
     }
 
     //Unprotected endpoint (register works)
     @Post('register')
-    async register(@Req() req : Request) : Promise <{ message:string}> {
+    async register(@Req() req ) : Promise <{ message:string}> {
         const saltOrRounds = 10;
         if (!req.body.password || !req.body.username || ! req.body.password2){
             return { message : "No password Given or Username Given"};

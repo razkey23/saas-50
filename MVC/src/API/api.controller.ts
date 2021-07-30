@@ -8,6 +8,7 @@ import {Keyword} from "../Entities/keyword/entities/keyword.entity";
 import { Request } from 'express';
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 import {QuestionService} from "../Entities/question/question.service";
+import {type} from "os";
 /*Here I have to create the endpoints*/
 
 @Controller('api')
@@ -24,14 +25,161 @@ export class APIController {
         return this.keywordService.findAll();
     }
 
-    @Get('/home')
-    @Render('landing_page')
-    async home(@Req() req: Request,@Res() res) {
-        res.body = req.body;
-        res.redirect('/api/QuestionsPerKW');
+
+
+
+    @Get('QuestionsPerKW')
+    @Render('questions_keywords')
+    async QuestionsPerKWtest(@Res() res) {
+        let questions = await this.questionService.findAll();
+        let dict = new Object();
+        for (let x in questions) {
+            if (questions[x].keyword.length>0){
+                for (let kw in questions[x].keyword) {
+                    console.log((questions[x].keyword[kw].keyword));
+                    if (dict[questions[x].keyword[kw].keyword]) {
+                        dict[(questions[x].keyword[kw].keyword)]+=1
+                    }
+                    else dict[(questions[x].keyword[kw].keyword)] =1
+                }
+            }
+        }
+        const lab =[];
+        Object.keys(dict).forEach(key => lab.push(String(key.replace("'",'"'))));
+        return {
+            pie: {
+                labels: JSON.stringify(lab),
+                values: Object.values(dict)
+            },
+            dict: dict
+        }
+        //return {"keywords":Object.keys(dict),"values":Object.values(dict)};
+    }
+
+    @Get('QuestionsPerPeriod')
+    @Render('questions_period')
+    async QuestionsPerPeriod(@Res() res) {
+        let questions = await this.questionService.findAll();
+        console.log(questions);
+        let today = new Date();
+        let last3days = new Date(Date.now()-3*24*3600*1000);
+        let last7days = new Date(Date.now()-7*24*3600*1000);
+        let lastMonth = new Date(Date.now()-31*24*3600*1000);
+        let lastMonthQs=[];
+        let last3Qs=[];
+        let last7Qs=[];
+        questions.forEach(question => {
+            const dateCreated = new Date(question.date_asked);
+            console.log(dateCreated);
+
+            if (+dateCreated <= +today && +dateCreated >= +last7days) {
+                last7Qs.push(question);
+            }
+            if(+dateCreated <= +today && +dateCreated >= +last3days) {
+                last3Qs.push(question);
+            }
+            if(+dateCreated <= +today && +dateCreated >= +lastMonth) {
+                lastMonthQs.push(question);
+            }
+        });
+        return({
+            questionsM : lastMonthQs,
+            questionsW : last7Qs
+        });
+    }
+
+    @Get('AnswerQuestion')
+    @Render('question_to_answer')
+    async questionToAnswer(@Req() req,@Res() res) {
+        let questions = await this.questionService.findAll();
+        return {questions:questions};
+    }
+
+
+
+    @Get('login')
+    @Render('login')
+    async login(@Req() req,@Res() res) {
+        //cookies = req.cookies;
+        for (let i in req.cookies) {
+            res.clearCookie(i);
+        }
         return {status:"OK"};
     }
 
+    @Get('AskQuestion')
+    @Render('ask_question')
+    async askQuestion() {
+        let keywordsList = await this.keywordService.findAll();
+        console.log("ASK QUESTION LOG")
+        console.log(keywordsList);
+        return {keywords : keywordsList};
+        //let questions = await this.questionService.findAll();
+    }
+
+    @Post('/submitQuestion')
+    async submitQuestion(@Req() req,@Res() res) {
+        console.log("SUBMIT QUESTION LOG")
+        console.log(req.cookies);
+        if (req.cookies.loggedIn) {
+            let user= {
+                id:req.cookies.userId
+            }
+            let today = new Date();
+            let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            //console.log(date);
+            //console.log(req.body.keywords);
+            let keyList=[]
+            for (let i in req.body.keywords) {
+                keyList.push({"id":parseInt(req.body.keywords[i])});
+            }
+            console.log(keyList);
+            let customObj = {
+                user:user,
+                title :req.body.title,
+                text :req.body.text,
+                date_asked :date,
+                keyword:keyList
+            }
+            console.log(customObj);
+            const object = customObj;
+            let x = await this.questionService.create(object)
+                .then(result=> {
+                    console.log(result);
+                    res.cookie('message','Successful Insertion');
+                    res.redirect('success');
+                })
+                .catch(err => {
+                    console.log(err.message);
+                    //res.redirect('landing_page');
+                    res.redirect('AskQuestion');
+                    //return {"message" :err.message};
+                });
+
+            //res.redirect('landing_page');
+        }
+        else {
+            res.redirect('AskQuestion');
+            //res.redirect('login');
+        }
+        //Extract
+    }
+
+
+    @Get('/success')
+    @Render('successful')
+    success(@Req() req){
+        return {message:req.cookies.message};
+    }
+
+
+
+    @Get('/landing_page')
+    @Render('landing_page')
+    login1(@Req() req) {
+        console.log(req.cookies);
+        return {status:"200"};
+    }
     //Works but returns EVERYTHING ,need to create a custom obj
     @Get('/QuestionsPerKW')
     @Render('questions')
@@ -125,7 +273,8 @@ export class APIController {
 
 
     //INPUT OF TYPE "User":x ,x=id
-    @Get('/AnswersOfUser')
+    @Get('/MyContribution')
+    @Render('myContrib')
     //@UseGuards(JwtAuthGuard)
     async answersOfUser(@Req() req:Request){
         let answers = await this.answerService.findAll();
@@ -143,9 +292,48 @@ export class APIController {
                 temp.push(customobj);
             }
         }
-        return {"result":temp};
+        
+
+        let questions = await this.questionService.findAll();
+        let temp2=[]
+        for (let x in questions) {
+            if(questions[x].user.id==req.body.user) {
+                let customobj={
+                    id:questions[x].id,
+                    text:questions[x].text,
+                    title:questions[x].title,
+                    date_asked:questions[x].date_asked
+
+                };
+                temp2.push(customobj);
+            }
+        }
+        return {"answers":temp, "questions": temp2};
     }
 
+
+    @Post('QuestionToAnswer')
+    @Render('answer_question')
+    async AnswerQuestion(@Req() req, @Res() res) {
+        res.clearCookie('questionId');
+        let id = parseInt(req.body.question);
+        let question = await this.questionService.findOne(id);
+        console.log(question);
+        let tempKeywords=[]
+        for (let i in question.keyword) {
+            tempKeywords.push(question.keyword[i].keyword);
+        }
+        console.log(tempKeywords);
+        //NOW GET ANSWERS OF QUESTION
+        req.body.question=question.id;
+        let x = await this.answersOfQuestions(req);
+        console.log(x);
+        res.cookie('questionId',question.id);
+        return {
+            keywords:tempKeywords,
+            answers:x
+        };
+    }
 
 
     @Get('/QuestionsOfUser')
@@ -201,6 +389,45 @@ export class APIController {
         return {"result":x};
     }
 
+    @Post('/AddAnswerOfQuestion')
+    async addAnswerOfQuestion(@Req() req, @Res() res) {
+        let questionId = parseInt(req.cookies.questionId);
+        if (req.cookies.loggedIn) {
+            let user= {
+                id:req.cookies.userId
+            }
+            let today = new Date();
+            let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            let customObj = {
+                user:user,
+                text :req.body.text,
+                date_answered :date,
+                question:{
+                    id:questionId
+                }
+            }
+            console.log(customObj);
+            const object = customObj;
+            let x = await this.answerService.create(object)
+                .then(result=> {
+                    console.log(result);
+                    res.cookie('message','Successful Insertion');
+                    res.clearCookie('questionId');
+                    res.redirect('landing_page');
+                })
+                .catch(err => {
+                    console.log(err.message);
+                    //res.redirect('landing_page');
+                    res.clearCookie('questionId');
+                    res.redirect('landing_page');
+
+                });
+        }
+        else {
+            res.redirect('login');
+            //res.redirect('login');
+        }
+    }
 
     @Post('/AddAnswer')
     //@UseGuards(JwtAuthGuard)
@@ -225,6 +452,6 @@ export class APIController {
                 return {"message" :err.message}
             });
         return {"result":x};
-
+        //redirect to 
     }
 }

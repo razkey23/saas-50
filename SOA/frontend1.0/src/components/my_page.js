@@ -19,9 +19,15 @@ export default class Login extends Component {
                             <li className="nav-item">
                             <Link className="nav-link" to={"/login"}>Login</Link>
                             </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                            </li>
                         </ul>
                         ) : (
                             <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                            <Link className="nav-link" to={"/homepage"}>Home Page</Link>
+                            </li>
                             <li className="nav-item">
                             <Link className="nav-link" to={"/mypage"}>My Page</Link>
                             </li>
@@ -37,10 +43,10 @@ export default class Login extends Component {
                 </nav>
                 <div class="ask-me"><h2>My.AskMeAnything</h2></div>
                 <div className="home-pages">  
-                    <Link to = "/login" >
+                    <Link to = "/userContrib" >
                     <div className='home-box'>My questions<br/><br/>My answers</div>
                     </Link>
-                    <Link to = "/login" >
+                    <Link to = "/userDay" >
                         <div className='home-box'>My contributions per day</div>
                     </Link>
                     <Link to = "/ask" >

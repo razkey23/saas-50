@@ -111,7 +111,12 @@ export default class SignUp extends Component {
                   <div className="button-text">Cancel</div>
                 </button>
               </div>
-              
+              <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+                <div style={{fontSize: 20+"px", paddingTop: 20+"px", fontWeight: 700}}>Already have an account?</div>
+                <Link className="nav-link" to={"/login"} style={{fontSize:18+"px", fontWeight:600}}>Login</Link>
+              </div>
+
+
             </form>
           </div>
         </div>

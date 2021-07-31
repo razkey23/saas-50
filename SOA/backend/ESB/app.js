@@ -59,7 +59,7 @@ app.post('/proxy',async(req,res)=> {
   const event = req.body;
   let currentMessages ;
   let newMessage = {};
-  console.log(req.body);
+  //console.log(req.body);
   pool.hget('proxy','messages',async(err,data)=>{
     currentMessages = JSON.parse(data);
     newMessage = {
@@ -85,7 +85,8 @@ app.post('/proxy',async(req,res)=> {
             console.log("IN HERE")
             console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
             res.json(resp["data"]);
-          }).catch(e=>{
+          }).catch( e=>{
+            //console.log(e);
             //console.log(e);
             //res.send(resp);
             console.log(subscribers[i],{"status":"lost connection"})

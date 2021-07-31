@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const createError = require('http-errors');
 const router = express.Router();
@@ -34,19 +36,20 @@ passport.use('bcryptsignin',new LocalStrategy(function(username, password, cb) {
             } else if (response.statusCode === 200) {
                // for(var i = 0; i<bod.length;i++ ) {
                 for (x in bod) {
-                    console.log(bod[x]);
+                    //console.log(bod[x]);
 
                     if (bod[x].username === username) {
+
+                        let identity = bod[x].id;
                         //res.json(body[x]);
-                        console.log(password);
-                        console.log(bod[x].password);
                         bcrypt.compare(password, bod[x].password, function (err, res) {
                             if (err) return cb(err);
-                            if (res === false) {
+                            else if (res === false) {
                                 console.log("in here");
-                                return cb(null, false);
+                                return cb(null, {username: "NOT VALIDATED",id:"NOT VALIDATED"});
                             } else {
-                                return cb(null, {username: username,id:bod[x].id});
+
+                                return cb(null, {username: username,id:identity});
                             }
                         });
                     }
@@ -76,18 +79,28 @@ passport.use('token', new JWTStrategy(
 //passport.authenticate('signin',{session: false}),
 //passport.authenticate('bcryptsignin',{session:false}),
 //POST signin
-router.post('/signin',
-    passport.authenticate('bcryptsignin',{session:false}),
-    function(req, res, next) {
+router.post('/signin', passport.authenticate('bcryptsignin',{session:false}),
+    (req,res,next) => {
+        if(req.user.username ==='NOT VALIDATED') res.json({
+            status:"NOT VALIDATED"
+        })
+        else {
+            //console.log(req);
+            res.json({
+                token : jwt.sign(req.user,JWT_SECRET,{expiresIn:3600})
+            });
+        }
+
+    }
+    /*function(req, res, next) {
       res.json({
         token : jwt.sign(req.user,JWT_SECRET,{expiresIn:3600})
       });
-    }
+    }*/
 );
 
 //TEST ENDPOINT to check authentication
-router.get('/authenticate',
-    passport.authenticate('token',{session:false}),
+router.get('/authenticate', passport.authenticate('token',{session:false}),
     function(req,res,next){
         res.json({"status":"OK"});
     }
@@ -96,7 +109,7 @@ router.get('/authenticate',
     }*/
 );
 
-router.post('/register', function(req, res, next) {
+router.post('/register', async function(req, res, next) {
     // Whatever verifications and checks you need to perform here
     bcrypt.genSalt(10, function(err, salt) {
         if (!req.body.password){
@@ -278,7 +291,7 @@ router.get('/AnswersOfUser',function(req,res,next) {
 
  Text,title,user,date_asked are necessary ,keyword is optional
 */
-router.post('/AddQuestion',function(req,res,next){
+router.post('/AddQuestion1',function(req,res,next){
     if (!req.body.user.id || !req.body.title || !req.body.text || !req.body.date_asked){
         res.json({"error":"No user given"});
     }

@@ -21,7 +21,7 @@ export default class ContribUserDate extends Component {
         this.handleApply = this.handleApply.bind(this)
     }
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (localStorage.getItem("token")===null) {
             alert("You need to login first");
             this.props.history.push('/login');
@@ -29,20 +29,24 @@ export default class ContribUserDate extends Component {
         }
     }
 
-    handleApply(event, picker) {
-        var d1 = new Date(picker.startDate), d2 = new Date(picker.endDate);
+
+    handleApply = (event, picker) => {
+        //console.log(event,picker);
+
+        let d1 = picker.startDate.format('YYYY-MM-DD');
+        let d2 = picker.endDate.format('YYYY-MM-DD');
+       // let d1 = new Date(picker.startDate), d2 = new Date(picker.endDate);
         const userId = jwt(localStorage.getItem("token")).id;
-        this.setState({
-            startDate: [d1.getFullYear(), ('0'+(d1.getMonth()+1)).slice(-2), ('0'+(d1.getDate())).slice(-2)].join('-'),
-            endDate: [d2.getFullYear(), ('0'+(d2.getMonth()+1)).slice(-2), ('0'+(d2.getDate())).slice(-2)].join('-')
-        });
+        console.log(localStorage.getItem("token"));
+
         const metadata= {
             endpoint:'QuestionsUserPerDay',
             method:'GET',
-            datefrom:this.state.startDate,
-            dateto:this.state.endDate,
+            datefrom:d1,
+            dateto:d2,
             user:userId
         }
+        console.log(metadata);
         axios({
             method:'post',
             url:'http://localhost:3001/proxy',
@@ -50,35 +54,39 @@ export default class ContribUserDate extends Component {
             Headers:{
                 "Authorization": "Bearer "+localStorage.getItem("token")
             }
-        }).then(function(response) {
+        }).then(response => {
             console.log(response);
             this.setState({
-            questions: response.data
+            questions: response.data.questions
         })
         }).catch(function(error) {
           alert(error)
         })
 
-        // axios({
-        //     method: 'POST',
-        //     url: `http://localhost:3001/proxy`,
-        //     body: {
-        //       "endpoint": "AnswersUserDay",
-        //       "datefrom": this.state.startDate,
-        //       "dateto": this.state.endDate,
-        //       "user": userId,
-        //       "method": "GET"
-        //     },
-        //     Headers:{
-        //       "Authorization": "Bearer "+localStorage.getItem("token")
-        //     }
-        //   }).then(function(response) {
-        //       this.setState({
-        //       answers: response
-        //   })
-        //   }).catch(function(error) {
-        //     alert(error)
-        //   })
+        const metadata1= {
+            endpoint:'AnswersUserPerDay',
+            method:'GET',
+            datefrom:d1,
+            dateto:d2,
+            user:userId
+        }
+        axios({
+            method:'post',
+            url:'http://localhost:3001/proxy',
+            data: metadata1,
+            Headers:{
+                "Authorization": "Bearer "+localStorage.getItem("token")
+            }
+        }).then(response => {
+            console.log(response);
+            this.setState({
+                answers: response.data.answers
+            })
+        }).catch(function(error) {
+            alert(error)
+        })
+
+
     }
     render() {
         var columnsQ = [
@@ -86,9 +94,11 @@ export default class ContribUserDate extends Component {
             { dataField: 'title', text: 'Title', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
             { dataField: 'text', text: 'Description', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
           ]
-          var columnsA = [
-            { dataField: 'id', text: 'Id', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
-            { dataField: 'text', text: 'Answer', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
+          let columnsA = [
+              { dataField: 'id', text: 'Id', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
+              { dataField: 'text', text: 'Answer', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
+              { dataField: 'questionTitle', text: 'Question', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"} },
+
           ]
           const rowStyle = (row, rowIndex) => {
             const style = {};
@@ -132,7 +142,7 @@ export default class ContribUserDate extends Component {
                 </nav>
                 <div style={{marginTop:70+"px", marginLeft:50+"px"}}>
                 <h2 style={{fontSize:30+"px",  fontWeight:700, color:"blue"}}>Select Date</h2>
-                <DateRangePicker onApply={this.handleApply}>
+                <DateRangePicker onApply={(event,picker) => this.handleApply(event,picker) }>
                     <input style={{fontSize:20+"px",  fontWeight:500, backgroundColor:"LightCyan", color:"MidnightBlue"}}/>
                 </DateRangePicker>
                 </div>

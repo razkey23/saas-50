@@ -15,9 +15,10 @@ export default class ContribUser extends Component {
             questions: [],
             answers: []
         }
+
     }
 
-    componentDidMount(){
+    componentDidMount= () => {
         if (localStorage.getItem("token")===null) {
             alert("You need to login first");
             this.props.history.push('/login');
@@ -26,43 +27,48 @@ export default class ContribUser extends Component {
         const userId = jwt(localStorage.getItem("token")).id;
         axios({
           method: 'POST',
-          url: `http://localhost:3001/proxy`,
-          body: {
-            "endpoint": "AnswersOfUser",
-            "user": userId,
-            "method": "GET"
+          url: 'http://localhost:3001/proxy',
+          data: {
+              endpoint: "QuestionsPerUser",
+              user: userId,
+              method: "GET",
+
           },
           Headers:{
             "Authorization": "Bearer "+localStorage.getItem("token")
           }
-        }).then(function(response) {
+        }).then(response => {
+            console.log(response.data.questions);
             this.setState({
-                answers: response
+                questions: response.data.questions
             })
         }).catch(function(error) {
           alert(error)
         })
+
         // TODO: this need to be created
         axios({
             method: 'POST',
-            url: `http://localhost:3001/proxy`,
-            body: {
-              "endpoint": "QuestionsOfUser",
-              "user": userId,
-              "method": "GET"
+            url: 'http://localhost:3001/proxy',
+            data: {
+              endpoint: "AnswersOfUser",
+              user: userId,
+              method: "GET"
             },
             Headers:{
               "Authorization": "Bearer "+localStorage.getItem("token")
             }
-          }).then(function(response) {
+          }).then(response => {
+              console.log(response.data.answers);
               this.setState({
-                  answers: response
+                  answers: response.data.answers
               })
-          }).catch(function(error) {
+          }).catch(error => {
             alert(error)
           })  
     }
     render() {
+
         //these to be changed to the fields we want to show
         var columnsQ = [
             { dataField: 'id', text: 'Id', headerStyle: {backgroundColor: 'MidnightBlue', color:"white"}},
@@ -144,7 +150,7 @@ export default class ContribUser extends Component {
                     <a href="/">contact us</a>
                     <a href="/">project documentation</a>
                     <a href="/">link on github</a>
-                    <a href="/">cource materials</a>
+                    <a href="/">course materials</a>
                 </div>
             </div>
         );

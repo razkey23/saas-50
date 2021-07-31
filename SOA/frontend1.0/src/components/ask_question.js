@@ -19,32 +19,37 @@ export default class Ask extends Component {
                 {'id':7,"name": "Algorithms"},
                 {'id':8,"name": "Graph Theory"},
                 {'id':9,"name": "Haskell"}
-            ],            question_name: '',
+            ],
+            question_name: '',
             question_text: '',
             keywords: [],
         }
+        this.submitQuestion=this.submitQuestion.bind(this);
     }
 
-    sumbitQuestion(){
+    submitQuestion = () => {
         const userId = jwt(localStorage.getItem("token")).id;
         const date = new Date();
         axios({
           method: 'POST',
           url: `http://localhost:3001/proxy`,
-          body: {
-            "userId": userId,
-            "title": this.state.question_name,
-            "text": this.state.question_text,
-            "keywords": this.state.keywords,
-            "date_asked": [date.getFullYear(), ('0'+(date.getMonth()+1)).slice(-2), ('0'+(date.getDate())).slice(-2)].join('-'),
-            "method": "POST"
+          data: {
+              user: userId,
+              title: this.state.question_name,
+              text: this.state.question_text,
+              keyword: this.state.keywords,
+              date_asked: [date.getFullYear(), ('0'+(date.getMonth()+1)).slice(-2), ('0'+(date.getDate())).slice(-2)].join('-'),
+              method: "post",
+              endpoint:'AddQuestion'
           },
           Headers:{
             "Authorization": "Bearer "+localStorage.getItem("token")
           }
-        }).then(function(response) {
+        }).then(response => {
+            console.log(response.data);
+            alert("Questions Posted Successfully");
           this.props.history.push('/mypage');
-        }).catch(function(error) {
+        }).catch(error => {
           alert(error)
         })
     }
@@ -62,9 +67,15 @@ export default class Ask extends Component {
     }
 
     updateKeywords(evt){
+        //console.log(evt);
+        let tempList=[];
+        for (let i=0;i<evt.length;i++) {
+            tempList.push({ id : evt[i].id});
+        }
         this.setState({
-            keywords: evt
+            keywords: tempList
         })
+
     }
     
     render() {
@@ -127,7 +138,7 @@ export default class Ask extends Component {
                         />
                     </div>
                     <div style={{width:100+"%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
-                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.sumbitQuestion()} style={{marginRight:1+"em", marginLeft:10+"px"}}>
+                        <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.submitQuestion()} style={{marginRight:1+"em", marginLeft:10+"px"}}>
                             <div style={{fontSize: 18+"px",fontWeight: 600}}>Submit</div>
                         </button>
                         <button type="submit" className="btn btn-primary btn-block button-forms" onClick={() => this.props.history.push("/homepage")} style={{marginLeft:1+"em", marginRight:10+"px"}}>

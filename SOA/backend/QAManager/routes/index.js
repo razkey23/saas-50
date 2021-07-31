@@ -31,7 +31,7 @@ router.get('/AnswersOfQuestion',function(req,res,next) {
             temp.push(customobj);
           }
         }
-        res.json(temp);  //Return object
+        res.json({answers:temp});  //Return object
       } else {
         console.log(response.statusCode);
       }
@@ -67,7 +67,7 @@ router.get('/AnswersOfUser',function(req,res,next) {
             temp.push(customobj);
           }
         }
-        res.json(temp);  //Return object
+        res.json({answers:temp});  //Return object
       } else {
         console.log(response.statusCode);
       }
@@ -105,7 +105,7 @@ router.get('/QuestionsPerUser',function(req,res,next) {
             temp.push(customobj);
           }
         }
-        res.json(temp);  //Return object
+        res.json({questions:temp});  //Return object
       } else {
         console.log(response.statusCode);
       }
@@ -201,6 +201,7 @@ router.get('/AnswersUserPerDay',function(req,res,next) {
               customobj.id = body[x].id;
               customobj.text = body[x].text;
               customobj.questionId = body[x].question.id;
+              customobj.questionTitle=body[x].question.title;
               customobj.date_answered = body[x].date_answered;
               answersOfUser.push(customobj);
             }
@@ -238,19 +239,60 @@ router.get('/AnswersUserPerDay',function(req,res,next) {
 
  Text,title,user,date_asked are necessary ,keyword is optional
 */
+
+
+
+
+//FETCH ALL ANSWERS
+router.get('/GetQuestions',function(req,res,next){
+  const requestOptions = {
+    url: "http://localhost:3000/question",
+    method: 'GET',
+    json: {}
+  }
+  request(requestOptions, (err, response, body) => {
+    if (err) {
+      console.log(err);
+    } else if (response.statusCode === 200) {
+      //INIT RESULT ARRAY
+
+      res.json({questions: body});
+    } else {
+      console.log(response.statusCode);
+      res.json({status: "Datalayer Error"});
+    }
+  });
+});
+
+
 router.post('/AddQuestion',function(req,res,next){
-  if (!req.body.user.id || !req.body.title || !req.body.text || !req.body.date_asked){
+  if (!req.body.user || !req.body.title || !req.body.text || !req.body.date_asked){
+    console.log("IN HERE")
     res.json({"error":"No user given"});
   }
   else {
+    console.log(req.body);
     //res.send("OK");
     let customobj = {};
-    customobj.user=req.body.user;
-    customobj.title =req.body.title;
-    customobj.text =req.body.text;
-    customobj.date_asked =req.body.date_asked;
+    let user = {
+      id : req.body.user
+    }
+
+
+    customobj.user = user
+    customobj.title = req.body.title;
+    customobj.text = req.body.text;
+    customobj.date_asked = req.body.date_asked;
+    let keywordList=[];
     if (req.body.keyword) {
-      customobj.keyword = req.body.keyword;
+      for (let i in req.body.keyword) {
+        keywordList.push({id:parseInt(req.body.keyword[i].id)})
+      }
+    }
+    console.log(keywordList);
+    if (req.body.keyword) {
+      customobj.keyword = keywordList;
+      //customobj.keyword = req.body.keyword;
     }
     //Execute the data layer call now
     //res.send(customobj);
@@ -261,7 +303,7 @@ router.post('/AddQuestion',function(req,res,next){
         method: 'POST',
         json: object
     }
-      console.log(requestOptions);
+      //console.log(requestOptions);
       request(requestOptions, (err, response, body) =>
       {
         if (err) {
@@ -297,13 +339,16 @@ router.post('/AddQuestion',function(req,res,next){
   All Fields are mandatory
  */
 router.post('/AddAnswer',function(req,res,next){
-  if (!req.body.user.id || !req.body.text || !req.body.question.id || !req.body.date_answered){
+  if (!req.body.user || !req.body.text || !req.body.question.id || !req.body.date_answered){
     res.json({"error":"No user given"});
   }
   else {
     //res.send("OK");
     let customobj = {};
-    customobj.user=req.body.user;
+    let user = {
+      id:req.body.user
+    }
+    customobj.user=user;
     customobj.question =req.body.question;
     customobj.text =req.body.text;
     customobj.date_answered =req.body.date_answered;

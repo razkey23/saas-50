@@ -81,7 +81,7 @@ app.post('/proxy',async(req,res)=> {
             data : event ,
             headers : req.headers
           }).then(resp=>{
-            console.log(resp)
+            //console.log(resp)
             console.log("IN HERE")
             console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
             res.json(resp["data"]);

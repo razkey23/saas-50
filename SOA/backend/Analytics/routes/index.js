@@ -27,7 +27,8 @@ router.get('/QuestionsPerKW',function (req, res, next) {
     console.log(resp);
     // AUTHORIZATION SUCCEED
     console.log(resp["data"]);
-    if (resp["data"]["status"]=='OK') {
+    if(true) {
+    //if (resp["data"]["status"]=='OK') {
       if (!req.body.keyword && !req.body.id) {
         res.json({"error":"Not keyword given"});
       }

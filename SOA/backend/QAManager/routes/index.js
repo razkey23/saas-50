@@ -114,6 +114,111 @@ router.get('/QuestionsPerUser',function(req,res,next) {
 });
 
 
+
+//Get Contributions per user per day
+router.get('/QuestionsUserPerDay',function(req,res,next){
+  if (!req.body.user || (!req.body.day && (!req.body.datefrom || !req.body.dateto))){
+    res.json({"error":"Bad input data were given"});
+  }
+  else {
+    let datefrom;
+    let dateto ;
+    if (req.body.day) {
+      datefrom=req.body.day;
+      dateto=req.body.day;
+    }
+    else {
+      datefrom=req.body.datefrom;
+      dateto=req.body.dateto;
+    }
+    let questionsOfUser=[]
+
+    //FIND QUESTIONS PER USER
+    const requestOptions = {
+      url: "http://localhost:3000/question",
+      method: 'GET',
+      json: {}
+    }
+    request(requestOptions, (err, response, body) => {
+      if (err) {
+        console.log(err);
+      } else if (response.statusCode === 200) {
+        //INIT RESULT ARRAY
+        for (x in body) { //PARSE Question JSON
+          //console.log(body[x]);
+          if (body[x].user.id == req.body.user && body[x].date_asked >= datefrom && body[x].date_asked <= dateto) {
+            let customobj = {};
+            customobj.id = body[x].id;
+            customobj.text = body[x].text;
+            customobj.title = body[x].title;
+            customobj.date_asked = body[x].date_asked;
+            questionsOfUser.push(customobj);
+          }
+        }
+        res.json({questions:questionsOfUser});
+
+      }
+      else {
+        console.log(response.statusCode);
+      }
+    });
+
+  }
+});
+
+router.get('/AnswersUserPerDay',function(req,res,next) {
+  if (!req.body.user || (!req.body.day && (!req.body.datefrom || !req.body.dateto))) {
+    res.json({"error": "Bad input data were given"});
+  } else {
+    let datefrom;
+    let dateto;
+    if (req.body.day) {
+      datefrom = req.body.day;
+      dateto = req.body.day;
+    } else {
+      datefrom = req.body.datefrom;
+      dateto = req.body.dateto;
+    }
+    let answersOfUser = []
+
+    //NOW FIND ANSWERS OF USER
+    const requestOptions1 = {
+      url: "http://localhost:3000/answer",
+      method: 'GET',
+      json: {}
+    }
+    request(requestOptions1, (err, response, body) => {
+      if (err) {
+        console.log(err);
+      } else if (response.statusCode === 200) {
+        //INIT RESULT ARRAY
+        for (x in body) { //PARSE Question JSON
+          //console.log(body[x]);
+          if (body[x].user.id == req.body.user) {
+            console.log()
+            if (body[x].date_answered >= datefrom && body[x].date_answered <= dateto) {
+              let customobj = {};
+              customobj.id = body[x].id;
+              customobj.text = body[x].text;
+              customobj.questionId = body[x].question.id;
+              customobj.date_answered = body[x].date_answered;
+              answersOfUser.push(customobj);
+            }
+          }
+        }
+        res.json({answers:answersOfUser});
+      } else {
+        console.log(response.statusCode);
+      }
+    });
+  }
+});
+
+
+
+
+
+
 //Post Question
 /*
  Post localhost:5000/AddQuestion + body following the format

@@ -30,6 +30,8 @@ export default class QuestionsPerKeyword extends Component {
 
 
      getQuestion = (e) => {
+        let x = localStorage.getItem("token");
+        console.log(x);
         console.log(e)
         const metadata = {
             endpoint : "QuestionsPerKW",

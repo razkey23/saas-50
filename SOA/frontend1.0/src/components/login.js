@@ -9,41 +9,49 @@ export default class Login extends Component {
       username: '',
       password: ''
     }
+    this.login = this.login.bind(this)
   }
 
-  updateUsername(evt){
+  updateUsername= (evt) => {
     this.setState({
       username: evt.target.value
     });
     console.log(this.state)
   }
 
-  updatePassword(evt){
+  updatePassword = (evt) => {
     this.setState({
       password: evt.target.value
     });
     console.log(this.state)
   }
   
-  login(){
+  login = () => {
+    console.log("GOT IN HERE")
+
+    const metadata= {
+      endpoint:'signin',
+      method:'POST',
+      username:this.state.username,
+      password:this.state.password
+    }
     axios({
-      method: 'POST',
-      url: `http://localhost:3001/proxy`,
-      body: {
-        "endpoint": "signin",
-        "username": this.state.username,
-        "password": this.state.password,
-        "method": "POST"
-      },
-      Headers:{
-        "Authorization": "Bearer Token"
-      }
-    }).then(function(response) {
-      localStorage.setItem('token', response);
-      this.props.history.push('/mypage');
-    }).catch(function(error) {
-      alert(error)
-    })
+      method:'post',
+      url:'http://localhost:3001/proxy',
+      data: metadata,
+    }).then(response => {
+      console.log("IN HERE")
+      console.log(response.data);
+      localStorage.setItem('token',response.data.token);
+      //console.log(response.data.token);
+      this.props.history.push('/my_page');
+    })/*.catch(error => {
+      //alert(error);
+      //this.props.history.push('/homepage');
+      console.log(error);
+      console.log("IN HEREEEE");
+      //alert(error);
+    })*/
   }
 
   
@@ -84,7 +92,7 @@ export default class Login extends Component {
 
               <div className="form-group">
                 <label className="labels">Username:</label>
-                <input type="text" className="form-control" placeholder="Enter username" onChange={evt => this.updateUsername(evt)}></input>
+                <input type="text" className="form-control" placeholder="Enter username" onChange={ evt => this.updateUsername(evt)}></input>
               </div>
 
               <div className="form-group">
@@ -92,7 +100,7 @@ export default class Login extends Component {
                 <input type="password" className="form-control" placeholder="Enter password" onChange={evt => this.updatePassword(evt)}></input>
               </div>
               <div style={{width:100+"%", display:"flex", justifyContent:"center", alignItems:"center"}}>
-                <button type="submit" onClick={() => this.login()} className="btn btn-primary btn-block button-forms">
+                <button type="submit" onClick={ () => this.login() } className="btn btn-primary btn-block button-forms">
                   <div className="button-text">Login</div>
                 </button>
               </div>

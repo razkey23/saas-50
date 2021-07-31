@@ -47,6 +47,26 @@ const pool = require('redis-connection-pool')('myRedisPool',{
 console.log("connected to redis");
 
 
+pool.hget('proxy-subscribers','channel',async (err,data)=>{
+  let currentSubscribers = JSON.parse(data);
+  let alreadySubscribed = false ;
+  let myAddress = 'http://localhost:8000';
+  for (let i=0 ;i <currentSubscribers.length;i++){
+    if (currentSubscribers[i]==myAddress){
+      alreadySubscribed=true
+    }
+  }
+  if (alreadySubscribed==false){
+    currentSubscribers.push(myAddress);
+    pool.hset('proxy-subscribers','channel',JSON.stringify(currentSubscribers),()=>{})
+    console.log('subscribed');
+  }
+  else {
+    console.log('already-subscribed');
+  }
+});
+
+
 pool.hget('subscribers','channel',async (err,data)=>{
   let currentSubscribers = JSON.parse(data);
   //let alreadySubscribed = true ;

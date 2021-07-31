@@ -52,5 +52,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-react-html-attrs": "^3.0.5"
+  }
 }

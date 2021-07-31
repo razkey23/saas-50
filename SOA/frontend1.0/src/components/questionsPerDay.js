@@ -25,19 +25,19 @@ export default class QuestionsPerDay extends Component {
             startDate: [d1.getFullYear(), ('0'+(d1.getMonth()+1)).slice(-2), ('0'+(d1.getDate())).slice(-2)].join('-'),
             endDate: [d2.getFullYear(), ('0'+(d2.getMonth()+1)).slice(-2), ('0'+(d2.getDate())).slice(-2)].join('-')
         });
+        const metadata= {
+            endpoint:'QuestionsPerDay',
+            method:'GET',
+            datefrom:this.state.startDate,
+            dateto:this.state.endDate
+        }
         axios({
-          method: 'POST',
-          url: `http://localhost:3001/proxy`,
-          body: {
-            "endpoint": "QuestionsPerDay",
-            "datefrom": this.state.startDate,
-            "dateto": this.state.endDate,
-            "method": "GET"
-          },
-          
-        }).then(function(response) {
+            method:'post',
+            url:'http://localhost:3001/proxy',
+            data: metadata
+        }).then(response => {
             this.setState({
-            questions: response
+            questions: response.data
         })
         }).catch(function(error) {
           alert(error)

@@ -36,22 +36,24 @@ export default class ContribUserDate extends Component {
             startDate: [d1.getFullYear(), ('0'+(d1.getMonth()+1)).slice(-2), ('0'+(d1.getDate())).slice(-2)].join('-'),
             endDate: [d2.getFullYear(), ('0'+(d2.getMonth()+1)).slice(-2), ('0'+(d2.getDate())).slice(-2)].join('-')
         });
+        const metadata= {
+            endpoint:'QuestionsUserPerDay',
+            method:'GET',
+            datefrom:this.state.startDate,
+            dateto:this.state.endDate,
+            user:userId
+        }
         axios({
-          method: 'POST',
-          url: `http://localhost:3001/proxy`,
-          body: {
-            "endpoint": "ContribUserPerDay",
-            "datefrom": this.state.startDate,
-            "dateto": this.state.endDate,
-            "user": userId,
-            "method": "GET"
-          },
-          Headers:{
-            "Authorization": "Bearer "+localStorage.getItem("token")
-          }
+            method:'post',
+            url:'http://localhost:3001/proxy',
+            data: metadata,
+            Headers:{
+                "Authorization": "Bearer "+localStorage.getItem("token")
+            }
         }).then(function(response) {
+            console.log(response);
             this.setState({
-            questions: response
+            questions: response.data
         })
         }).catch(function(error) {
           alert(error)

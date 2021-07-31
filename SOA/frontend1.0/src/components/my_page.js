@@ -55,11 +55,11 @@ export default class Login extends Component {
                     </Link>
                 </div>
                 <div className="footer">
-                    <a href="/">about</a>
-                    <a href="/">contact us</a>
-                    <a href="/">project documentation</a>
-                    <a href="/">link on github</a>
-                    <a href="/">cource materials</a>
+                    <a href="https://docs.google.com/document/d/1g1SxYip_uSeVmqw1M-FMAOMvfxRus5vT/edit?usp=sharing&ouid=113980108797041909237&rtpof=true&sd=true">about</a>
+                    <a href="mailto:el16155@mail.ntua.gr; el16049@mail.ntua.gr">contact us</a>
+                    <a href="https://docs.google.com/document/d/1xNA4t2Ms4qwfw-UNrHDLNCagWRADmi4r/edit?usp=sharing&ouid=113980108797041909237&rtpof=true&sd=true">project documentation</a>
+                    <a href="https://github.com/razkey23/saas-50">link on github</a>
+                    <a href="https://courses.pclab.ece.ntua.gr/course/view.php?id=34">course materials</a>
                 </div>
             </div>
         

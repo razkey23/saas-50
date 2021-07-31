@@ -64,9 +64,15 @@ export class APIController {
         let last7Qs=[];
         questions.forEach(question => {
             const dateCreated = new Date(question.date_asked);
-            console.log(dateCreated);
 
+            //console.log(dateCreated);
+            //console.log(last7days);
+            //console.log(lastMonth);
+            console.log(+dateCreated);
+            console.log(+last7days);
+            console.log("*****");
             if (+dateCreated <= +today && +dateCreated >= +last7days) {
+                console.log("In here");
                 last7Qs.push(question);
             }
             if(+dateCreated <= +today && +dateCreated >= +last3days) {
@@ -76,6 +82,11 @@ export class APIController {
                 lastMonthQs.push(question);
             }
         });
+        console.log({
+            questionsM : lastMonthQs,
+            questionsW : last7Qs
+
+        })
         return({
             questionsM : lastMonthQs,
             questionsW : last7Qs

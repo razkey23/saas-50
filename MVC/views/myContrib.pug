@@ -1,6 +1,7 @@
 html 
     head
         title='My questions - My answers'
+        link(rel='stylesheet' href='/css/style.css')
     body
         div.container
             ul.col-md-12.row
@@ -8,12 +9,9 @@ html
                     li.col-md-2 HomePage
                 a(href='http://localhost:3000/api/myPage')
                     li.col-md-2 My Page
-                a(href="http://localhost:3000/api/login")
-                    li.col-md-2 Login
                 a(href='http://localhost:3000/api/logout')
                     li.col-md-2.col-md-offset-1 Logout
-                a(href='http://localhost:3000/api/signup')
-                    li.col-md-2 Register
+
         h2(style="padding: 30px 0px 10px 5%; color:midnightblue; font-weight:700") My Questions
         table(style="width: 90%; margin-left:5%")
             tr 

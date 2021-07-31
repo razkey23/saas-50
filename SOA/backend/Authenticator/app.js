@@ -5,7 +5,9 @@ const logger = require('morgan');
 const passport=require('passport');
 const indexRouter = require('./routes/index');
 const bodyParser=require('body-parser');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 const db = require('./pgqueries');
 
 app.use(bodyParser.json());

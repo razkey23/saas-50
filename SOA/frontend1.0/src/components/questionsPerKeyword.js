@@ -9,8 +9,9 @@ export default class QuestionsPerKeyword extends Component {
     constructor(){
         super()
         this.state={
+            //keywords :[],
             keywords: [
-                {'id':1,"name": "Machine-Learning"},
+                {'id':1,"name": "Machine Learning"},
                 {'id':2,"name": "AI"},
                 {'id':3,"name": "Python"},
                 {'id':4,"name": "Java"},
@@ -20,34 +21,38 @@ export default class QuestionsPerKeyword extends Component {
                 {'id':8,"name": "Graph Theory"},
                 {'id':9,"name": "Haskell"}
             ],
-            keyword: '',
+            keyword:'',
             questions: []
         }
+        //this.getQuestion.bind(this);
     }
-    
-    getQuestion(e){
+
+
+
+     getQuestion = (e) => {
+        console.log(e)
+        const metadata = {
+            endpoint : "QuestionsPerKW",
+            method : "get",
+            keyword: e.name
+        }
         axios({
-            method: 'POST',
-            url: `http://localhost:3001/proxy`,
-            body: {
-              "endpoint": "QuestionsPerKW",
-              "keyword": this.state.keyword,
-              "method": "GET"
-            },
+            method: "post",
+            url: 'http://localhost:3001/proxy',
+            data: metadata,
             Headers:{
               "Authorization": "Bearer "+localStorage.getItem("token")
             }
-        }).then(function(response) {
-            this.setState({
-                questions: response
-            });
+        }).then(response => {
+            this.setState({ questions: response.data} );
+            console.log(response.data)
         }).catch(function(error) {
             alert(error)
-        })
-    }
+        });
+    };
 
     render() {
-        var columns = [
+        let columns = [
             { 
                 dataField: 'id', 
                 text: 'Id',
@@ -110,10 +115,12 @@ export default class QuestionsPerKeyword extends Component {
                     <Select
                         class="form-control"
                         placeholder="Select Keyword"
+                        onClick={() => this.getKeywords()}
                         options={this.state.keywords}
                         getOptionLabel={(option)=>option.name}
                         getOptionValue={(option)=>option.id}
-                        onChange={e => this.getQuestion(e)}
+                        onChange={ e => this.getQuestion(e)}
+                        //onChange={ e => this.getQuestion(e)}
                     />
                     <div style={{marginTop:40+"px", height:400+"px", overflowY:"scroll"}}>
                         <div>

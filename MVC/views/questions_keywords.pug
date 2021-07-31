@@ -6,16 +6,16 @@ html
     body
         div.container
             ul.col-md-12.row
-                a(href="#")
-                    li.col-md-2.col-md-offset-1 Home Page
-                a(href="#")
-                    li.col-md-2 Register
-                a(href="#")
-                    li.col-md-2 Login
-                a(href="#")
-                    li.col-md-2.col-md-offset-1 Logout
-                a(href="#")
+                a(href='http://localhost:3000/api/landing_page')
+                    li.col-md-2 HomePage
+                a(href='http://localhost:3000/api/myPage')
                     li.col-md-2 My Page
+                a(href="http://localhost:3000/api/login")
+                    li.col-md-2 Login
+                a(href='http://localhost:3000/api/logout')
+                    li.col-md-2.col-md-offset-1 Logout
+                a(href='http://localhost:3000/api/signup')
+                    li.col-md-2 Register
 
 
         div.container
@@ -28,15 +28,28 @@ html
             let myChart = document.getElementById("chart").getContext('2d');
 
             let x = !{pie.labels}
-            console.log(x);
-
+            //console.log(x);
+            let colors=[]
+            for (let i in x) {
+                console.log(i);
+                let x = parseInt(i);
+                let increment=parseInt(i)/10;
+                increment +=0.2;
+                console.log(increment);
+                let firstVal = 20*x;
+                let color='rgba('+firstVal+','+increment+',0,'+increment+')';
+                colors.push(color);
+                //console.log(i);
+            }
+            console.log(colors);
             //labels:['Boston','Worcester','Springfield'],
             let QPKChart = new Chart(myChart,{
-                type:'pie',
+                type:'doughnut',
                 data:{
                     labels:!{pie.labels},
                     datasets:[{
-                        label:'Population',
+                        backgroundColor: colors,
+                        label:'Questions Per Keyword',
                         data:#{JSON.stringify(pie.values)}
                     }]
                 },

@@ -8,8 +8,9 @@ const redis = require('redis');
 const indexRouter = require('./routes/index');
 const bodyParser = require('body-parser');
 
-
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
 app.set('view engine', 'pug');
 
@@ -23,6 +24,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json())
 app.use('/', indexRouter);
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const REDIS_PORT = 6379;
 const REDIS_HOST = "localhost";
@@ -44,11 +52,14 @@ pool.hset('proxy-subscribers','channel',JSON.stringify([]),()=>{});
 */
 
 
+
+
 //USED AS PROXY
 app.post('/proxy',async(req,res)=> {
   const event = req.body;
   let currentMessages ;
   let newMessage = {};
+  console.log(req.body);
   pool.hget('proxy','messages',async(err,data)=>{
     currentMessages = JSON.parse(data);
     newMessage = {
@@ -75,7 +86,7 @@ app.post('/proxy',async(req,res)=> {
             console.log(subscribers[i]+"/"+newMessage.endpoint,resp["data"])
             res.json(resp["data"]);
           }).catch(e=>{
-            console.log(e);
+            //console.log(e);
             //res.send(resp);
             console.log(subscribers[i],{"status":"lost connection"})
           });
